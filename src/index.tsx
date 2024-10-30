@@ -1,5 +1,18 @@
-import { StrictMode } from 'react';
+import { initApp, showVideo } from '~/app';
 
-import { createRoot } from 'react-dom/client';
+export { initApp, showVideo } from './app';
 
-createRoot(document.getElementById('root')!).render(<StrictMode />);
+initApp();
+
+showVideo({
+  video: {
+    src: 'https://videos.pexels.com/video-files/2035391/2035391-hd_1080_1440_30fps.mp4',
+    canSkip: true,
+    skipLimit: 5,
+    closeLimit: 10,
+  },
+  onVideoEnded: (status) => {
+    console.log(status);
+  },
+  onReward: null,
+});

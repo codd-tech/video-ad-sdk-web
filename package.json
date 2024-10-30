@@ -15,16 +15,22 @@
     "ts-check": "tsc --noEmit"
   },
   "dependencies": {
+    "@chakra-ui/react": "^3.0.2",
+    "@emotion/react": "^11.13.3",
     "@tanstack/react-query": "^5.59.16",
+    "compose-function": "^3.0.3",
     "ky": "^1.7.2",
+    "next-themes": "^0.3.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-icons": "^5.3.0",
     "zustand": "^5.0.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.13.0",
     "@tanstack/eslint-plugin-query": "^5.59.7",
     "@trivago/prettier-plugin-sort-imports": "^4.3.0",
+    "@types/compose-function": "^0.0.33",
     "@types/react": "^18.3.11",
     "@types/react-dom": "^18.3.1",
     "@types/telegram-web-app": "^7.10.1",
