@@ -1,8 +1,9 @@
-import { FC, useMemo } from 'react';
+import { FC, useCallback, useMemo } from 'react';
 
 import { Box, Center, Flex, Spinner } from '@chakra-ui/react';
 
 import { OnVideoSuccess, VideoModel } from '~/shared/api/video';
+import { useWindowFocus } from '~/shared/hooks';
 import {
   ProgressCircleRing,
   ProgressCircleRoot,
@@ -15,6 +16,8 @@ import { useSkipVideo, VideoSkip } from '~/features/video/skip';
 import { SKIP_SECONDS_LIMIT } from '../lib/constants';
 import { formatProgress } from '../lib/format-progress';
 import usePlayer from '../model/use-player';
+
+import styles from './styles.module.css';
 
 interface VideoPlayerProps {
   onVideoEnded: OnVideoSuccess;
@@ -37,16 +40,26 @@ const VideoPlayer: FC<VideoModel & VideoPlayerProps> = ({
     duration,
     progress,
     isWaiting,
+    pause,
+    play,
   } = usePlayer(closeLimit);
 
-  const playedSeconds = useMemo(() => formatProgress(progress, duration).getSeconds(), [progress]);
+  const handleFocus = useCallback(() => play(), [play]);
+  const handleBlur = useCallback(() => pause(), [pause]);
+
+  useWindowFocus(handleFocus, handleBlur);
+
+  const playedSeconds = useMemo(
+    () => formatProgress(progress, duration).getSeconds(),
+    [duration, progress],
+  );
 
   const { handleSkip, isCanSkip } = useSkipVideo(onVideoEnded, canSkip, skipLimit, playedSeconds);
 
   const { isCanClose, handleClose } = useCloseVideo(onVideoEnded, closeLimit, playedSeconds);
 
   return (
-    <Flex direction="column" pos="relative">
+    <Flex direction="column" pos="relative" overflow="hidden">
       {isWaiting ? (
         <Box inset={0} pos="absolute" bg="bg/20">
           <Center h="full">
@@ -56,6 +69,7 @@ const VideoPlayer: FC<VideoModel & VideoPlayerProps> = ({
       ) : null}
 
       <video
+        className={styles.video}
         ref={videoRef}
         width="auto"
         height="100%"

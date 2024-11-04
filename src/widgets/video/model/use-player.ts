@@ -6,6 +6,7 @@ const usePlayer = (durationLimit: number) => {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
   const [isWaiting, setIsWaiting] = useState(false);
   const [progress, setProgress] = useState(0);
   const [bufferedProgress, setBufferedProgress] = useState(0);
@@ -38,10 +39,12 @@ const usePlayer = (durationLimit: number) => {
     setIsWaiting(true);
   }, []);
   const handlePlay = useCallback(() => {
+    console.log('play');
     setIsWaiting(false);
     setIsPlaying(true);
   }, []);
   const handlePause = useCallback(() => {
+    console.log('pause');
     setIsPlaying(false);
     setIsWaiting(false);
   }, []);
@@ -56,6 +59,15 @@ const usePlayer = (durationLimit: number) => {
     }
 
     play();
+  };
+
+  const toggleMute = () => {
+    if (!videoRef.current) return;
+
+    const muted = !videoRef.current.muted;
+
+    videoRef.current.muted = muted;
+    setIsMuted(muted);
   };
 
   const seekTo = (newProgress: number) => {
@@ -77,6 +89,7 @@ const usePlayer = (durationLimit: number) => {
     play,
     pause,
     seekTo,
+    toggleMute,
 
     videoRef,
 
@@ -84,6 +97,7 @@ const usePlayer = (durationLimit: number) => {
     bufferedProgress,
     isPlaying,
     isWaiting,
+    isMuted,
 
     duration,
   };
