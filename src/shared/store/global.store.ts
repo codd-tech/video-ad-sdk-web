@@ -2,28 +2,31 @@ import { create } from 'zustand';
 
 import { OnVideoSuccess, VideoModel } from '~/shared/api/video';
 
-interface GlobalStore {
-  token: Nullable<string>;
+export interface ShowVideoOptions {
+  video: VideoModel | null;
+
+  onVideoEnded?: OnVideoSuccess;
+  onReward?: () => void;
+}
+
+export interface GlobalStore {
+  token: string | null;
   isVisible: boolean;
-
-  video: Nullable<VideoModel>;
-
-  onVideoEnded: Nullable<OnVideoSuccess>;
-  onReward: Nullable<() => void>;
 
   init(token: string): void;
 
-  show(payload: Pick<GlobalStore, 'onVideoEnded' | 'onReward' | 'video'>): void;
+  /**
+   * Shows video AD player.
+   */
+  show(options: ShowVideoOptions): void;
 
   hide(): void;
 }
 
-export const useGlobal = create<GlobalStore>((setState) => ({
+export const useGlobal = create<GlobalStore & ShowVideoOptions>((setState) => ({
   token: null,
   isVisible: false,
   video: null,
-  onVideoEnded: null,
-  onReward: null,
 
   init(token) {
     setState({ token });

@@ -1,10 +1,18 @@
-import {defineConfig} from 'vite'
-import react from '@vitejs/plugin-react'
-import path from 'path'
+import path from 'path';
+import { defineConfig } from 'vite';
+import dts from 'vite-plugin-dts';
+
+import react from '@vitejs/plugin-react';
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+    dts({
+      rollupTypes: true,
+      tsconfigPath: './tsconfig.app.json',
+    }),
+  ],
   resolve: {
     alias: {
       '~': path.resolve(__dirname, 'src'),
@@ -13,4 +21,23 @@ export default defineConfig({
   define: {
     'process.env': process.env,
   },
-})
+  build: {
+    sourcemap: true,
+    emptyOutDir: true,
+    lib: {
+      entry: path.resolve(__dirname, 'src/index.tsx'),
+      name: 'VideoAD SDK',
+      fileName: (format) => `index.${format}.js`,
+    },
+    rollupOptions: {
+      external: ['react', 'react-dom', 'react/jsx-runtime'],
+      output: {
+        globals: {
+          react: 'React',
+          'react-dom': 'React-dom',
+          'react/jsx-runtime': 'react/jsx-runtime',
+        },
+      },
+    },
+  },
+});

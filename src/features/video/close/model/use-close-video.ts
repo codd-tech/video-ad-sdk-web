@@ -3,9 +3,9 @@ import { useCallback, useEffect, useState } from 'react';
 import { OnVideoSuccess } from '~/shared/api/video';
 
 const useCloseVideo = (
-  onVideoEnded: Nullable<OnVideoSuccess>,
   closeLimit: number,
   playedSeconds: number,
+  onVideoEnded?: OnVideoSuccess,
 ) => {
   const [isCanClose, setIsCanClose] = useState(false);
 

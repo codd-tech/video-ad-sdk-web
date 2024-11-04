@@ -3,10 +3,10 @@ import { useCallback, useEffect, useState } from 'react';
 import { OnVideoSuccess } from '~/shared/api/video';
 
 const useSkipVideo = (
-  onVideoEnded: Nullable<OnVideoSuccess>,
   canSkip: boolean,
   skipLimit: number,
   playedSeconds: number,
+  onVideoEnded?: OnVideoSuccess,
 ) => {
   const [isCanSkip, setIsCanSkip] = useState(false);
 

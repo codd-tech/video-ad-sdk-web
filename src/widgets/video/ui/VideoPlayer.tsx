@@ -54,9 +54,9 @@ const VideoPlayer: FC<VideoModel & VideoPlayerProps> = ({
     [duration, progress],
   );
 
-  const { handleSkip, isCanSkip } = useSkipVideo(onVideoEnded, canSkip, skipLimit, playedSeconds);
+  const { handleSkip, isCanSkip } = useSkipVideo(canSkip, skipLimit, playedSeconds, onVideoEnded);
 
-  const { isCanClose, handleClose } = useCloseVideo(onVideoEnded, closeLimit, playedSeconds);
+  const { isCanClose, handleClose } = useCloseVideo(closeLimit, playedSeconds, onVideoEnded);
 
   return (
     <Flex direction="column" pos="relative" overflow="hidden">
