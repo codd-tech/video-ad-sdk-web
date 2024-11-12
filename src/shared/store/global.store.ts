@@ -35,6 +35,6 @@ export const useGlobal = create<GlobalStore & ShowVideoOptions>((setState) => ({
     setState({ isVisible: true, ...payload });
   },
   hide() {
-    setState({ isVisible: false });
+    setState({ isVisible: false, video: null, onVideoEnded: undefined, onReward: undefined });
   },
 }));

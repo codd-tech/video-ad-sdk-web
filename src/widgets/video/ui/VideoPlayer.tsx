@@ -13,7 +13,7 @@ import {
 import { useCloseVideo, VideoClose } from '~/features/video/close';
 import { useSkipVideo, VideoSkip } from '~/features/video/skip';
 
-import { SKIP_SECONDS_LIMIT } from '../lib/constants';
+import { SKIP_SECONDS_LIMIT, VIDEO_ID } from '../lib/constants';
 import { formatProgress } from '../lib/format-progress';
 import usePlayer from '../model/use-player';
 
@@ -69,6 +69,7 @@ const VideoPlayer: FC<VideoModel & VideoPlayerProps> = ({
       ) : null}
 
       <video
+        id={VIDEO_ID}
         className={styles.video}
         ref={videoRef}
         width="auto"

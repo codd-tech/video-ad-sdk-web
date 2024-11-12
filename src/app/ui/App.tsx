@@ -1,10 +1,11 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 
 import { OnVideoSuccess } from '~/shared/api/video';
+import { useMuteElements } from '~/shared/hooks';
 import { useGlobal } from '~/shared/store/global.store';
 
 import { Layout } from '~/widgets/layout';
-import { VideoPlayer } from '~/widgets/video';
+import { VIDEO_ID, VideoPlayer } from '~/widgets/video';
 
 import { withProviders } from '../providers';
 
@@ -16,12 +17,23 @@ const App = withProviders(() => {
 
   const onVideoEnded = useGlobal((state) => state.onVideoEnded);
 
+  const { handleMuteAll, handleUnmuteAll } = useMuteElements();
+
+  const shouldShowVideoPlayer = useMemo(() => isVisible && !!video, [isVisible, video]);
+
+  useEffect(() => {
+    if (shouldShowVideoPlayer) {
+      handleMuteAll(VIDEO_ID);
+    }
+  }, [handleMuteAll, handleUnmuteAll, shouldShowVideoPlayer]);
+
   const handleVideoEnd = useCallback<OnVideoSuccess>(
     (status) => {
       onVideoEnded?.(status);
       hide();
+      handleUnmuteAll();
     },
-    [hide, onVideoEnded],
+    [handleUnmuteAll, hide, onVideoEnded],
   );
 
   return (
