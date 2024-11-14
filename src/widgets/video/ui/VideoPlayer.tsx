@@ -16,8 +16,7 @@ import { useSkipVideo, VideoSkip } from '~/features/video/skip';
 import { SKIP_SECONDS_LIMIT, VIDEO_ID } from '../lib/constants';
 import { formatProgress } from '../lib/format-progress';
 import usePlayer from '../model/use-player';
-
-import styles from './styles.module.css';
+import useVideoQuality from '../model/use-video-quality';
 
 interface VideoPlayerProps {
   onVideoEnded: OnVideoSuccess;
@@ -30,6 +29,8 @@ const VideoPlayer: FC<VideoModel & VideoPlayerProps> = ({
   closeLimit,
   onVideoEnded,
 }) => {
+  const source = useVideoQuality(src);
+
   const {
     videoRef,
     handleProgress,
@@ -70,11 +71,11 @@ const VideoPlayer: FC<VideoModel & VideoPlayerProps> = ({
 
       <video
         id={VIDEO_ID}
-        className={styles.video}
+        style={{ height: '100%' }}
         ref={videoRef}
         width="auto"
         height="100%"
-        src={src}
+        src={source}
         onProgress={handleProgress}
         onTimeUpdate={handleTimeUpdate}
         onWaiting={handleWaiting}
