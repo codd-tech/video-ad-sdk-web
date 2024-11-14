@@ -3,8 +3,6 @@ import { useCallback, useMemo, useState } from 'react';
 const useMuteElements = () => {
   const [mutedElements, setMutedElements] = useState<Element[]>([]);
 
-  console.log(mutedElements);
-
   const elements = useMemo(() => document.querySelectorAll('video, audio'), []);
 
   const mute = (elem: HTMLVideoElement | HTMLAudioElement) => {
