@@ -4,6 +4,12 @@
   "author": "n.kupreev@codd.tech",
   "private": false,
   "version": "0.1.1",
+  "keywords": [
+    "advertisement",
+    "advertisement sdk",
+    "advertisement web",
+    "advertisement telegram"
+  ],
   "license": "MIT",
   "type": "module",
   "scripts": {
