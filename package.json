@@ -1,9 +1,11 @@
 {
   "name": "@codd-tech/video-ad-sdk",
   "description": "Web Advertising Platform SDK",
+  "repository": "https://github.com/codd-tech/video-ad-sdk-web",
+  "homepage": "https://github.com/codd-tech/video-ad-sdk-web",
   "author": "n.kupreev@codd.tech",
   "private": false,
-  "version": "0.1.3",
+  "version": "0.1.4",
   "keywords": [
     "advertisement",
     "advertisement sdk",
