@@ -23,8 +23,7 @@
     "pretty": "prettier --write \"./**/*.{ts,tsx,json,css,html}\"",
     "prepare": "husky",
     "lint-staged": "lint-staged --config ./lint-staged.config.cjs",
-    "ts-check": "tsc --noEmit",
-    "publish": "npm publish --access public"
+    "ts-check": "tsc --noEmit"
   },
   "dependencies": {
     "@chakra-ui/react": "^3.0.2",
