@@ -9,11 +9,11 @@ The Video AD Player SDK provides a simple interface for initializing and display
 To use this SDK, first install it in your project:
 
 ```bash
-npm install your-video-ad-player-sdk
+npm install @codd-tech/video-ad-sdk
 ```
 or
 ```bash
-yarn add your-video-ad-player-sdk
+yarn add @codd-tech/video-ad-sdk
 ```
 
 ## Quick Start
