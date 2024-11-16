@@ -22,7 +22,6 @@ export default defineConfig({
     'process.env': process.env,
   },
   build: {
-    sourcemap: true,
     emptyOutDir: true,
     lib: {
       entry: path.resolve(__dirname, 'src/index.tsx'),
