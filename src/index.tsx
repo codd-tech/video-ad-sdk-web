@@ -5,7 +5,7 @@ if (import.meta.env.DEV) {
 
   showVideo({
     video: {
-      src: 'https://videos.pexels.com/video-files/2035391/2035391-hd_1080_1440_30fps.mp4',
+      src: 'https://kinescope.io/mMZhUWSyT2F4aWFp6BJT5X',
       canSkip: true,
       skipLimit: 5,
       closeLimit: 10,

@@ -434,6 +434,48 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@codd-tech/video-ad-sdk@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "@codd-tech/video-ad-sdk@workspace:."
+  dependencies:
+    "@chakra-ui/react": "npm:^3.0.2"
+    "@emotion/react": "npm:^11.13.3"
+    "@eslint/js": "npm:^9.13.0"
+    "@kinescope/player-iframe-api-loader": "npm:^0.0.17"
+    "@tanstack/eslint-plugin-query": "npm:^5.59.7"
+    "@tanstack/react-query": "npm:^5.59.16"
+    "@trivago/prettier-plugin-sort-imports": "npm:^4.3.0"
+    "@types/add": "npm:^2"
+    "@types/compose-function": "npm:^0.0.33"
+    "@types/react": "npm:^18.3.11"
+    "@types/react-dom": "npm:^18.3.1"
+    "@types/telegram-web-app": "npm:^7.10.1"
+    "@vitejs/plugin-react": "npm:^4.3.3"
+    add: "npm:^2.0.6"
+    compose-function: "npm:^3.0.3"
+    eslint: "npm:^9.13.0"
+    eslint-plugin-import: "npm:^2.31.0"
+    eslint-plugin-prettier: "npm:^5.2.1"
+    eslint-plugin-react-hooks: "npm:^5.0.0"
+    eslint-plugin-react-refresh: "npm:^0.4.13"
+    globals: "npm:^15.11.0"
+    husky: "npm:^9.1.6"
+    ky: "npm:^1.7.2"
+    lint-staged: "npm:^15.2.10"
+    next-themes: "npm:^0.3.0"
+    prettier: "npm:^3.3.3"
+    react: "npm:^18.3.1"
+    react-dom: "npm:^18.3.1"
+    react-icons: "npm:^5.3.0"
+    typescript: "npm:~5.6.2"
+    typescript-eslint: "npm:^8.10.0"
+    vite: "npm:^5.4.9"
+    vite-plugin-dts: "npm:^4.3.0"
+    yarn: "npm:^1.22.22"
+    zustand: "npm:^5.0.0"
+  languageName: unknown
+  linkType: soft
+
 "@emotion/babel-plugin@npm:^11.12.0":
   version: 11.12.0
   resolution: "@emotion/babel-plugin@npm:11.12.0"
@@ -947,6 +989,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@kinescope/player-iframe-api-loader@npm:^0.0.17":
+  version: 0.0.17
+  resolution: "@kinescope/player-iframe-api-loader@npm:0.0.17"
+  checksum: 10c0/a972054065041a9274a2e37f6c8130c7af3f7989cd7a430b717cc3ceb40da74ab5c412d8a0ccc9790b92ea48615d77aa5177e7720b1700f226b7b268bc78a627
+  languageName: node
+  linkType: hard
+
 "@microsoft/api-extractor-model@npm:7.29.8":
   version: 7.29.8
   resolution: "@microsoft/api-extractor-model@npm:7.29.8"
@@ -1332,6 +1381,13 @@ __metadata:
     "@vue/compiler-sfc":
       optional: true
   checksum: 10c0/42270fb9c89e54a3f8b6ac8c43e6d0e03350e2857e902cdad4de22c78ef1864da600525595311bc7e94e51c16c7dd3882c2e048a162fdab59761ffa893756aa2
+  languageName: node
+  linkType: hard
+
+"@types/add@npm:^2":
+  version: 2.0.3
+  resolution: "@types/add@npm:2.0.3"
+  checksum: 10c0/d18841b43d3799f69db0bdae380d19d05f43b716315c5bfd4d6c1b3467bada2644eab8c04bb5afdb94bba87604da06d466f22fe30df6bcf0518c373593bb474a
   languageName: node
   linkType: hard
 
@@ -3280,6 +3336,13 @@ __metadata:
   bin:
     acorn: bin/acorn
   checksum: 10c0/6d4ee461a7734b2f48836ee0fbb752903606e576cc100eb49340295129ca0b452f3ba91ddd4424a1d4406a98adfb2ebb6bd0ff4c49d7a0930c10e462719bbfd7
+  languageName: node
+  linkType: hard
+
+"add@npm:^2.0.6":
+  version: 2.0.6
+  resolution: "add@npm:2.0.6"
+  checksum: 10c0/6b21d5f2e58cf5e15d56cc6f9ebce04f04f4c33ae25f09d600ddacf8df00036ba521f17feb1b3f81307b7c6d2ef0bed8b511a0f86f062eb90c2f909b48b588ae
   languageName: node
   linkType: hard
 
@@ -6991,44 +7054,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"video-ad-sdk@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "video-ad-sdk@workspace:."
-  dependencies:
-    "@chakra-ui/react": "npm:^3.0.2"
-    "@emotion/react": "npm:^11.13.3"
-    "@eslint/js": "npm:^9.13.0"
-    "@tanstack/eslint-plugin-query": "npm:^5.59.7"
-    "@tanstack/react-query": "npm:^5.59.16"
-    "@trivago/prettier-plugin-sort-imports": "npm:^4.3.0"
-    "@types/compose-function": "npm:^0.0.33"
-    "@types/react": "npm:^18.3.11"
-    "@types/react-dom": "npm:^18.3.1"
-    "@types/telegram-web-app": "npm:^7.10.1"
-    "@vitejs/plugin-react": "npm:^4.3.3"
-    compose-function: "npm:^3.0.3"
-    eslint: "npm:^9.13.0"
-    eslint-plugin-import: "npm:^2.31.0"
-    eslint-plugin-prettier: "npm:^5.2.1"
-    eslint-plugin-react-hooks: "npm:^5.0.0"
-    eslint-plugin-react-refresh: "npm:^0.4.13"
-    globals: "npm:^15.11.0"
-    husky: "npm:^9.1.6"
-    ky: "npm:^1.7.2"
-    lint-staged: "npm:^15.2.10"
-    next-themes: "npm:^0.3.0"
-    prettier: "npm:^3.3.3"
-    react: "npm:^18.3.1"
-    react-dom: "npm:^18.3.1"
-    react-icons: "npm:^5.3.0"
-    typescript: "npm:~5.6.2"
-    typescript-eslint: "npm:^8.10.0"
-    vite: "npm:^5.4.9"
-    vite-plugin-dts: "npm:^4.3.0"
-    zustand: "npm:^5.0.0"
-  languageName: unknown
-  linkType: soft
-
 "vite-plugin-dts@npm:^4.3.0":
   version: 4.3.0
   resolution: "vite-plugin-dts@npm:4.3.0"
@@ -7217,6 +7242,16 @@ __metadata:
   bin:
     yaml: bin.mjs
   checksum: 10c0/40fba5682898dbeeb3319e358a968fe886509fab6f58725732a15f8dda3abac509f91e76817c708c9959a15f786f38ff863c1b88062d7c1162c5334a7d09cb4a
+  languageName: node
+  linkType: hard
+
+"yarn@npm:^1.22.22":
+  version: 1.22.22
+  resolution: "yarn@npm:1.22.22"
+  bin:
+    yarn: bin/yarn.js
+    yarnpkg: bin/yarn.js
+  checksum: 10c0/8c77198c93d7542e7f4e131c63b66de357b7076ecfbcfe709ec0d674115c2dd9edaa45196e5510e6e9366d368707a802579e3402071002e1c9d9a99d491478de
   languageName: node
   linkType: hard
 

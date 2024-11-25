@@ -3,7 +3,7 @@ import { FC, useCallback, useMemo } from 'react';
 import { Box, Center, Flex, Spinner } from '@chakra-ui/react';
 
 import { OnVideoSuccess, VideoModel } from '~/shared/api/video';
-import { useWindowFocus } from '~/shared/hooks';
+import { useVideoQuality, useWindowFocus } from '~/shared/hooks';
 import {
   ProgressCircleRing,
   ProgressCircleRoot,
@@ -16,7 +16,6 @@ import { useSkipVideo, VideoSkip } from '~/features/video/skip';
 import { SKIP_SECONDS_LIMIT, VIDEO_ID } from '../lib/constants';
 import { formatProgress } from '../lib/format-progress';
 import usePlayer from '../model/use-player';
-import useVideoQuality from '../model/use-video-quality';
 
 interface VideoPlayerProps {
   onVideoEnded: OnVideoSuccess;
@@ -29,7 +28,7 @@ const VideoPlayer: FC<VideoModel & VideoPlayerProps> = ({
   closeLimit,
   onVideoEnded,
 }) => {
-  const source = useVideoQuality(src);
+  useVideoQuality(src);
 
   const {
     videoRef,
@@ -75,7 +74,7 @@ const VideoPlayer: FC<VideoModel & VideoPlayerProps> = ({
         ref={videoRef}
         width="auto"
         height="100%"
-        src={source}
+        src={src}
         onProgress={handleProgress}
         onTimeUpdate={handleTimeUpdate}
         onWaiting={handleWaiting}

@@ -1,19 +1,13 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { VideoQuality } from '~/shared/api/video';
-import { useNetworkSpeed } from '~/shared/hooks';
+
+import useNetworkSpeed from './use-network-speed';
 
 const useVideoQuality = (src: string) => {
-  // TODO: change test file url
   const networkSpeed = useNetworkSpeed(src);
 
   const [videoQuality, setVideoQuality] = useState(VideoQuality.Low);
-
-  const videoSource = useMemo(() => {
-    const [path, ext] = src.split('.');
-
-    return `${path}-${videoQuality}.${ext}`;
-  }, [src, videoQuality]);
 
   useEffect(() => {
     if (networkSpeed) {
@@ -37,7 +31,7 @@ const useVideoQuality = (src: string) => {
     setVideoQuality(VideoQuality.Low);
   }, [networkSpeed]);
 
-  return videoSource;
+  return videoQuality;
 };
 
 export default useVideoQuality;
