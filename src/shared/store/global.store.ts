@@ -3,7 +3,7 @@ import { create } from 'zustand';
 import { OnVideoSuccess, VideoModel } from '~/shared/api/video';
 
 export interface ShowVideoOptions {
-  video: VideoModel | null;
+  video: Omit<VideoModel, 'src'> | null;
 
   onVideoEnded?: OnVideoSuccess;
   onReward?: () => void;

@@ -28,7 +28,6 @@ VideoAdPlayer.initApp('YOUR_API_TOKEN');
 // Show video
 VideoAdPlayer.showVideo({
   video: {
-    src: 'https://example.com/video.mp4',
     canSkip: true,
     skipLimit: 10, // optional, seconds before the video can be skipped. 5 by default, if canSkip is true
     closeLimit: 15 // watching time in seconds, 30 by default
@@ -73,7 +72,6 @@ Options for displaying the video.
 
 Description of the video file.
 
-- **src** (string): URL for the video file.
 - **canSkip** (boolean): Ability to skip the video.
 - **skipLimit** (number, optional): Time in seconds after which the video can be skipped. **Default value: 5.**
 - **closeLimit** (number): Minimum watching time in seconds. **Default value: 30.**

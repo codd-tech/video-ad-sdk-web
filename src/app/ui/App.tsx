@@ -46,7 +46,12 @@ const App = withProviders(() => {
         <Layout>
           {/*<VideoPlayer onVideoEnded={handleVideoEnd} {...video} />*/}
 
-          <VideoKinescope factory={factory} onVideoEnded={handleVideoEnd} {...video} />
+          <VideoKinescope
+            src="https://kinescope.io/mMZhUWSyT2F4aWFp6BJT5X"
+            factory={factory}
+            onVideoEnded={handleVideoEnd}
+            {...video}
+          />
         </Layout>
       ) : null}
     </>

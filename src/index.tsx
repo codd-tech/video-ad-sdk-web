@@ -5,7 +5,6 @@ if (import.meta.env.DEV) {
 
   showVideo({
     video: {
-      src: 'https://kinescope.io/mMZhUWSyT2F4aWFp6BJT5X',
       canSkip: true,
       skipLimit: 5,
       closeLimit: 10,
