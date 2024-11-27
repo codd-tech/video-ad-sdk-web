@@ -28,10 +28,9 @@ const useKinescopePlayer = (
           localStorage: false,
           // @ts-expect-error Kinescope has not described options
           seekable: false,
+          endscreen: 'reset',
         },
         ui: {
-          playbackRateButton: false,
-          mainPlayButton: false,
           // @ts-expect-error Kinescope has not described options
           controlBar: 'always',
           buttonsBar: false,
@@ -44,10 +43,7 @@ const useKinescopePlayer = (
         setPlayedSeconds(data.currentTime);
       });
 
-      player.once(player.Events.Playing, () => {
-        player.setVolume(1);
-        player.unmute();
-      });
+      player.once(player.Events.Playing, () => {});
     })();
   }, [factory, player, src]);
 
