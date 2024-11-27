@@ -1,0 +1,7 @@
+#kinespope_player .wrapper>div>div {
+  border-radius: 0 !important;
+}
+
+#kinespope_player .wrapper {
+  display: none;
+}

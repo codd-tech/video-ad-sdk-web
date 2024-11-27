@@ -11,7 +11,6 @@ const useKinescopePlayer = (
 ) => {
   const [player, setPlayer] = useState<Kinescope.IframePlayer.Player | null>(null);
   const [playedSeconds, setPlayedSeconds] = useState(0);
-  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
     if (!factory || player) return;
@@ -27,23 +26,25 @@ const useKinescopePlayer = (
           muted: true,
           autoPlay: true,
           localStorage: false,
+          // @ts-expect-error Kinescope has not described options
+          seekable: false,
         },
         ui: {
           playbackRateButton: false,
           mainPlayButton: false,
-          controls: false,
+          // @ts-expect-error Kinescope has not described options
+          controlBar: 'always',
+          buttonsBar: false,
         },
-        keepElement: false,
       });
 
       setPlayer(player);
 
       player.on(player.Events.TimeUpdate, ({ data }) => {
         setPlayedSeconds(data.currentTime);
-        setProgress(data.percent);
       });
 
-      player.once(player.Events.Play, () => {
+      player.once(player.Events.Playing, () => {
         player.setVolume(1);
         player.unmute();
       });
@@ -58,7 +59,6 @@ const useKinescopePlayer = (
 
   return {
     playedSeconds,
-    progress,
   };
 };
 
