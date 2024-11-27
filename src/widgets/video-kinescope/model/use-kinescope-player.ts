@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { VideoQuality } from '~/shared/api/video';
 
@@ -35,6 +35,7 @@ const useKinescopePlayer = (
           controlBar: 'always',
           buttonsBar: false,
         },
+        keepElement: false,
       });
 
       setPlayer(player);
@@ -53,8 +54,14 @@ const useKinescopePlayer = (
     if (quality) player.setVideoQuality(quality as Kinescope.IframePlayer.VideoQuality);
   }, [player, quality]);
 
+  const handleDestroy = useCallback(
+    (onDestroyed?: () => void) => () => player?.destroy()?.then(() => onDestroyed?.()),
+    [player],
+  );
+
   return {
     playedSeconds,
+    handleDestroy,
   };
 };
 

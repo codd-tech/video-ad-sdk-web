@@ -28,7 +28,7 @@ const VideoKinescope: FC<VideoModel & VideoKinescopeProps> = ({
 }) => {
   const quality = useVideoQuality(src);
 
-  const { playedSeconds } = useKinescopePlayer(factory, src, quality);
+  const { playedSeconds, handleDestroy } = useKinescopePlayer(factory, src, quality);
 
   const { handleSkip, isCanSkip } = useSkipVideo(canSkip, skipLimit, playedSeconds, onVideoEnded);
 
@@ -39,11 +39,11 @@ const VideoKinescope: FC<VideoModel & VideoKinescopeProps> = ({
       <div id={KINESCOPE_PLAYER_ID} />
 
       {isCanSkip && !isCanClose ? (
-        <IconButton top={1} right={1} size="xs" pos="absolute" onClick={handleSkip}>
+        <IconButton top={1} right={1} size="xs" pos="absolute" onClick={handleDestroy(handleSkip)}>
           <VideoSkip />
         </IconButton>
       ) : isCanClose ? (
-        <IconButton top={1} right={1} size="xs" pos="absolute" onClick={handleClose}>
+        <IconButton top={1} right={1} size="xs" pos="absolute" onClick={handleDestroy(handleClose)}>
           <VideoClose />
         </IconButton>
       ) : null}
