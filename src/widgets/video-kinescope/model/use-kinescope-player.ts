@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import { VideoQuality } from '~/shared/api/video';
+import { useWindowFocus } from '~/shared/hooks';
 
 import { KINESCOPE_PLAYER_ID } from '../lib/constants';
 
@@ -58,6 +59,11 @@ const useKinescopePlayer = (
     (onDestroyed?: () => void) => () => player?.destroy()?.then(() => onDestroyed?.()),
     [player],
   );
+
+  const handleFocus = useCallback(() => player?.play(), [player]);
+  const handleBlur = useCallback(() => player?.pause(), [player]);
+
+  useWindowFocus(handleFocus, handleBlur);
 
   return {
     playedSeconds,
