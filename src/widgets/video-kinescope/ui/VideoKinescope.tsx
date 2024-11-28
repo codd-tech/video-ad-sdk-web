@@ -11,8 +11,6 @@ import { useSkipVideo, VideoSkip } from '~/features/video/skip';
 import { KINESCOPE_PLAYER_ID, SKIP_SECONDS_LIMIT } from '../lib/constants';
 import useKinescopePlayer from '../model/use-kinescope-player';
 
-import './styles.css';
-
 interface VideoKinescopeProps {
   factory: Kinescope.IframePlayer | null;
   onVideoEnded: OnVideoSuccess;
