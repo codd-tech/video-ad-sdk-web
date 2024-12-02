@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import { OnVideoSuccess } from '~/shared/api/video';
+import { OnAdSuccess } from '~/shared/api/ad';
 
 const useSkipVideo = (
   canSkip: boolean,
   skipLimit: number,
   playedSeconds: number,
-  onVideoEnded?: OnVideoSuccess,
+  onEnded?: OnAdSuccess,
 ) => {
   const [isCanSkip, setIsCanSkip] = useState(false);
 
@@ -15,8 +15,8 @@ const useSkipVideo = (
   }, [canSkip, playedSeconds, skipLimit]);
 
   const handleSkip = useCallback(() => {
-    onVideoEnded?.('skipped');
-  }, [onVideoEnded]);
+    onEnded?.('skipped');
+  }, [onEnded]);
 
   return {
     isCanSkip,

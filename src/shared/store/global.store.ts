@@ -1,40 +1,58 @@
 import { create } from 'zustand';
 
-import { OnVideoSuccess, VideoModel } from '~/shared/api/video';
+import { AdTypes, OnAdSuccess, AdModel } from '~/shared/api/ad';
 
-export interface ShowVideoOptions {
-  video: Omit<VideoModel, 'src'> | null;
+export interface ShowOptions {
+  type: AdTypes | null;
 
-  onVideoEnded?: OnVideoSuccess;
+  onEnded?: OnAdSuccess;
   onReward?: () => void;
+  onClick?: () => void;
 }
 
 export interface GlobalStore {
+  ad: AdModel | null;
   token: string | null;
   isVisible: boolean;
 
   init(token: string): void;
 
   /**
-   * Shows video AD player.
+   * Shows AD player.
    */
-  show(options: ShowVideoOptions): void;
+  show(options: ShowOptions): void;
 
   hide(): void;
 }
 
-export const useGlobal = create<GlobalStore & ShowVideoOptions>((setState) => ({
+export const useGlobal = create<GlobalStore & ShowOptions>((setState) => ({
   token: null,
   isVisible: false,
-  video: null,
+  ad: null,
+  type: null,
 
   init(token) {
     setState({ token });
   },
   show(payload) {
-    setState({ isVisible: true, ...payload });
+    setState({
+      isVisible: true,
+      ad: {
+        src: '',
+        link: '',
+        canSkip: true,
+        closeLimit: 10,
+      },
+      ...payload,
+    });
   },
   hide() {
-    setState({ isVisible: false, video: null, onVideoEnded: undefined, onReward: undefined });
+    setState({
+      isVisible: false,
+      ad: null,
+      onEnded: undefined,
+      onReward: undefined,
+      onClick: undefined,
+    });
   },
 }));

@@ -1,17 +1,13 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import { OnVideoSuccess } from '~/shared/api/video';
+import { OnAdSuccess } from '~/shared/api/ad';
 
-const useCloseVideo = (
-  closeLimit: number,
-  playedSeconds: number,
-  onVideoEnded?: OnVideoSuccess,
-) => {
+const useCloseVideo = (closeLimit: number, playedSeconds: number, onEnded?: OnAdSuccess) => {
   const [isCanClose, setIsCanClose] = useState(false);
 
   const handleClose = useCallback(() => {
-    onVideoEnded?.('closed');
-  }, [onVideoEnded]);
+    onEnded?.('closed');
+  }, [onEnded]);
 
   useEffect(() => {
     if (playedSeconds >= closeLimit) setIsCanClose(true);

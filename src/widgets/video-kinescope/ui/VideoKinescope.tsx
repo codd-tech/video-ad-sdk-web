@@ -1,9 +1,11 @@
-import { FC } from 'react';
+import { FC, useCallback } from 'react';
 
 import { Flex, IconButton } from '@chakra-ui/react';
 
-import { OnVideoSuccess, VideoModel } from '~/shared/api/video';
+import { AdModel } from '~/shared/api/ad';
 import { useVideoQuality } from '~/shared/hooks';
+import { telegram } from '~/shared/lib/telegram.ts';
+import { ShowOptions } from '~/shared/store/global.store';
 
 import { useCloseVideo, VideoClose } from '~/features/video/close';
 import { useSkipVideo, VideoSkip } from '~/features/video/skip';
@@ -13,13 +15,14 @@ import useKinescopePlayer from '../model/use-kinescope-player';
 
 interface VideoKinescopeProps {
   factory: Kinescope.IframePlayer | null;
-  onVideoEnded: OnVideoSuccess;
 }
 
-const VideoKinescope: FC<VideoModel & VideoKinescopeProps> = ({
+const VideoKinescope: FC<AdModel & Omit<ShowOptions, 'type'> & VideoKinescopeProps> = ({
   factory,
-  onVideoEnded,
+  onEnded,
+  onClick,
   src,
+  link,
   canSkip,
   skipLimit = SKIP_SECONDS_LIMIT,
   closeLimit,
@@ -28,12 +31,25 @@ const VideoKinescope: FC<VideoModel & VideoKinescopeProps> = ({
 
   const { playedSeconds, handleDestroy } = useKinescopePlayer(factory, src, quality);
 
-  const { handleSkip, isCanSkip } = useSkipVideo(canSkip, skipLimit, playedSeconds, onVideoEnded);
+  const { handleSkip, isCanSkip } = useSkipVideo(canSkip, skipLimit, playedSeconds, onEnded);
 
-  const { isCanClose, handleClose } = useCloseVideo(closeLimit, playedSeconds, onVideoEnded);
+  const { isCanClose, handleClose } = useCloseVideo(closeLimit, playedSeconds, onEnded);
+
+  const handleClick = useCallback(() => {
+    onClick?.();
+
+    telegram?.openLink(link, { try_instant_view: true });
+  }, [link, onClick]);
 
   return (
-    <Flex direction="column" pos="relative" overflow="hidden" h="full" w="full">
+    <Flex
+      direction="column"
+      pos="relative"
+      overflow="hidden"
+      h="full"
+      w="full"
+      onClick={handleClick}
+    >
       <div id={KINESCOPE_PLAYER_ID} />
 
       {isCanSkip && !isCanClose ? (

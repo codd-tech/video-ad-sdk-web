@@ -2,7 +2,7 @@ import { FC, useCallback, useMemo } from 'react';
 
 import { Box, Center, Flex, Spinner } from '@chakra-ui/react';
 
-import { OnVideoSuccess, VideoModel } from '~/shared/api/video';
+import { OnAdSuccess, AdModel } from '~/shared/api/ad';
 import { useVideoQuality, useWindowFocus } from '~/shared/hooks';
 import {
   ProgressCircleRing,
@@ -18,15 +18,15 @@ import { formatProgress } from '../lib/format-progress';
 import usePlayer from '../model/use-player';
 
 interface VideoPlayerProps {
-  onVideoEnded: OnVideoSuccess;
+  onEnded: OnAdSuccess;
 }
 
-const VideoPlayer: FC<VideoModel & VideoPlayerProps> = ({
+const VideoPlayer: FC<AdModel & VideoPlayerProps> = ({
   src,
   canSkip,
   skipLimit = SKIP_SECONDS_LIMIT,
   closeLimit,
-  onVideoEnded,
+  onEnded,
 }) => {
   useVideoQuality(src);
 
@@ -54,9 +54,9 @@ const VideoPlayer: FC<VideoModel & VideoPlayerProps> = ({
     [duration, progress],
   );
 
-  const { handleSkip, isCanSkip } = useSkipVideo(canSkip, skipLimit, playedSeconds, onVideoEnded);
+  const { handleSkip, isCanSkip } = useSkipVideo(canSkip, skipLimit, playedSeconds, onEnded);
 
-  const { isCanClose, handleClose } = useCloseVideo(closeLimit, playedSeconds, onVideoEnded);
+  const { isCanClose, handleClose } = useCloseVideo(closeLimit, playedSeconds, onEnded);
 
   return (
     <Flex direction="column" pos="relative" overflow="hidden">

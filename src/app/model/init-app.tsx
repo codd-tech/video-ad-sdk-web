@@ -10,7 +10,7 @@ import { createRoot } from 'react-dom/client';
  * Init the SDK at the app's document.
  * @param token - Token for the SDK.
  */
-export const initApp = (token: string) => {
+export const init = (token: string) => {
   useGlobal.getState().init(token);
 
   const container = document.createElement('div');

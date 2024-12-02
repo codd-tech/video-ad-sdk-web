@@ -20,20 +20,16 @@ yarn add @codd-tech/video-ad-sdk
 Import the SDK into your file and initialize the app using the provided token.
 
 ```javascript
-import VideoAdPlayer from 'video-ad-player-sdk';
+import AdSDK from '@codd-tech/video-ad-sdk';
 
 // Initialize the app with an API token
-VideoAdPlayer.initApp('YOUR_API_TOKEN');
+AdSDK.init('YOUR_API_TOKEN');
 
 // Show video
-VideoAdPlayer.showVideo({
-  video: {
-    canSkip: true,
-    skipLimit: 10, // optional, seconds before the video can be skipped. 5 by default, if canSkip is true
-    closeLimit: 15 // watching time in seconds, 30 by default
-  },
+AdSDK.showAD({
+  type: AdSDK.AdTypes.Dynamic,
   onVideoEnded: (status) => {
-    console.log(`Video ended with status: ${status}`);
+    console.log(`Ad ended with status: ${status}`);
   },
   onReward: () => {
     console.log('User rewarded!');
@@ -45,36 +41,29 @@ VideoAdPlayer.showVideo({
 
 ### Methods
 
-### `initApp(token: string): void`
+### `init(token: string): void`
 
 Initializes the application with the provided token.
 
 - **token** (string): Your API token for initializing the SDK.
 
-### `showVideo(options: ShowVideoOptions): void`
+### `showAD(options: ShowAdOptions): void`
 
 Displays a video with the specified options.
 
-- **options** (`ShowVideoOptions`): An object containing options for displaying the video.
+- **options** (`ShowAdOptions`): An object containing options for displaying the video.
 
 ## Interfaces
 
-### `ShowVideoOptions`
+### `ShowAdOptions`
 
 Options for displaying the video.
 
-- **video** (`VideoModel`): The video model to be displayed.
-- **onVideoEnded** (function, optional): A callback invoked when the video ends.
+- **type** (`AdTypes`): The ad type to be displayed (Dynamic or Static).
+- **onEnded** (function, optional): A callback invoked when the video ends.
     - Accepts values: `'skipped'` | `'closed'`
 - **onReward** (function, optional): A callback invoked when the user is rewarded.
-
-### `VideoModel`
-
-Description of the video file.
-
-- **canSkip** (boolean): Ability to skip the video.
-- **skipLimit** (number, optional): Time in seconds after which the video can be skipped. **Default value: 5.**
-- **closeLimit** (number): Minimum watching time in seconds. **Default value: 30.**
+- **onClick** (function, optional): A callback invoked when the user clicked on AD.
 
 ## Types
 
@@ -83,3 +72,9 @@ Description of the video file.
 The status of the completed video.
 
 - Values: `'skipped'`, `'closed'`
+
+### `AdTypes`
+
+The status of the completed video.
+
+- Values: `'Dynamic'`, `'Static'`

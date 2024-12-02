@@ -1,15 +1,13 @@
-import { initApp, showVideo } from '~/app';
+import { AdTypes } from '~/shared/api/ad';
+
+import { init, showAD } from '~/app';
 
 if (import.meta.env.DEV) {
-  initApp('');
+  init('');
 
-  showVideo({
-    video: {
-      canSkip: true,
-      skipLimit: 5,
-      closeLimit: 10,
-    },
+  showAD({
+    type: AdTypes.Dynamic,
   });
 }
 
-export { showVideo, initApp };
+export default { AdTypes, init, showAD };

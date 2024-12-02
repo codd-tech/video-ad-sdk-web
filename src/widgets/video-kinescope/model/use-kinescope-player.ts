@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import { VideoQuality } from '~/shared/api/video';
+import { AdQuality } from '~/shared/api/ad';
 import { useWindowFocus } from '~/shared/hooks';
 
 import { KINESCOPE_PLAYER_ID } from '../lib/constants';
@@ -8,7 +8,7 @@ import { KINESCOPE_PLAYER_ID } from '../lib/constants';
 const useKinescopePlayer = (
   factory: Kinescope.IframePlayer | null,
   src: string,
-  quality: VideoQuality,
+  quality: AdQuality,
 ) => {
   const [player, setPlayer] = useState<Kinescope.IframePlayer.Player | null>(null);
   const [playedSeconds, setPlayedSeconds] = useState(0);

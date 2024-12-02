@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo } from 'react';
 
-import { OnVideoSuccess } from '~/shared/api/video';
+import { AdTypes, OnAdSuccess } from '~/shared/api/ad';
 import { useMuteElements } from '~/shared/hooks';
 import { useLoadKinescope } from '~/shared/lib/kinescope';
 import { useGlobal } from '~/shared/store/global.store';
@@ -13,15 +13,19 @@ import { withProviders } from '../providers';
 
 const App = withProviders(() => {
   const isVisible = useGlobal((state) => state.isVisible);
-  const video = useGlobal((state) => state.video);
+  const ad = useGlobal((state) => state.ad);
+  const type = useGlobal((state) => state.type);
 
   const hide = useGlobal((state) => state.hide);
 
-  const onVideoEnded = useGlobal((state) => state.onVideoEnded);
+  const onEnded = useGlobal((state) => state.onEnded);
+  const onClick = useGlobal((state) => state.onClick);
 
   const { handleMuteAll, handleUnmuteAll } = useMuteElements();
 
-  const shouldShowVideoPlayer = useMemo(() => isVisible && !!video, [isVisible, video]);
+  const shouldShowVideoPlayer = useMemo(() => isVisible && !!ad, [isVisible, ad]);
+
+  const isVideo = useMemo(() => type === AdTypes.Dynamic, [type]);
 
   useEffect(() => {
     if (shouldShowVideoPlayer) {
@@ -29,29 +33,32 @@ const App = withProviders(() => {
     }
   }, [handleMuteAll, handleUnmuteAll, shouldShowVideoPlayer]);
 
-  const handleVideoEnd = useCallback<OnVideoSuccess>(
+  const handleVideoEnd = useCallback<OnAdSuccess>(
     (status) => {
-      onVideoEnded?.(status);
+      onEnded?.(status);
       hide();
       handleUnmuteAll();
     },
-    [handleUnmuteAll, hide, onVideoEnded],
+    [handleUnmuteAll, hide, onEnded],
   );
 
   const factory = useLoadKinescope();
 
   return (
     <>
-      {isVisible && video ? (
+      {isVisible && ad ? (
         <Layout>
           {/*<VideoPlayer onVideoEnded={handleVideoEnd} {...video} />*/}
 
-          <VideoKinescope
-            src="https://kinescope.io/5QMd936Jt7mfjat6v34MfD"
-            factory={factory}
-            onVideoEnded={handleVideoEnd}
-            {...video}
-          />
+          {isVideo ? (
+            <VideoKinescope
+              factory={factory}
+              onEnded={handleVideoEnd}
+              onClick={onClick}
+              {...ad}
+              src="https://kinescope.io/5QMd936Jt7mfjat6v34MfD"
+            />
+          ) : null}
         </Layout>
       ) : null}
     </>
