@@ -1,15 +1,28 @@
 export interface AdModel {
   src: string;
   link: string;
-  canSkip: boolean;
+}
 
-  skipLimit?: number;
-  closeLimit: number;
+export interface AdUnitModel {
+  name: string;
+  id: string;
+
+  type: AdTypes;
+  format: AdFormats;
+
+  gamblingEnabled?: boolean;
 }
 
 export enum AdTypes {
-  Static = 'MiniAppImage',
-  Dynamic = 'MiniAppVideo',
+  NonSkippable = 'non-skippable',
+  Skippable = 'skippable',
+  StaticCreative = 'static',
+}
+
+export enum AdFormats {
+  Interstitial = 'interstitial',
+  Rewarded = 'rewarded',
+  Banner = 'banner',
 }
 
 export type AdPlayedStatus = 'skipped' | 'closed';

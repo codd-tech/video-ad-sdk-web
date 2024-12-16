@@ -6,7 +6,7 @@ if (import.meta.env.DEV) {
   init('');
 
   showAD({
-    type: AdTypes.Dynamic,
+    adUnitId: '',
   });
 }
 

@@ -14,7 +14,7 @@ import { withProviders } from '../providers';
 const App = withProviders(() => {
   const isVisible = useGlobal((state) => state.isVisible);
   const ad = useGlobal((state) => state.ad);
-  const type = useGlobal((state) => state.type);
+  const adUnit = useGlobal((state) => state.adUnit);
 
   const hide = useGlobal((state) => state.hide);
 
@@ -25,7 +25,7 @@ const App = withProviders(() => {
 
   const shouldShowVideoPlayer = useMemo(() => isVisible && !!ad, [isVisible, ad]);
 
-  const isVideo = useMemo(() => type === AdTypes.Dynamic, [type]);
+  const isStatic = useMemo(() => adUnit?.type === AdTypes.StaticCreative, [adUnit?.type]);
 
   useEffect(() => {
     if (shouldShowVideoPlayer) {
@@ -46,19 +46,18 @@ const App = withProviders(() => {
 
   return (
     <>
-      {isVisible && ad ? (
+      {isVisible && ad && adUnit ? (
         <Layout>
-          {/*<VideoPlayer onVideoEnded={handleVideoEnd} {...video} />*/}
-
-          {isVideo ? (
+          {isStatic ? null : (
             <VideoKinescope
               factory={factory}
               onEnded={handleVideoEnd}
               onClick={onClick}
               {...ad}
+              {...adUnit}
               src="https://kinescope.io/5QMd936Jt7mfjat6v34MfD"
             />
-          ) : null}
+          )}
         </Layout>
       ) : null}
     </>
