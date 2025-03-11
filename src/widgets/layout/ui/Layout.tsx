@@ -8,10 +8,14 @@ import styles from './styles.module.scss';
 const LayoutCommon: FC<PropsWithChildren> = ({ children }) => {
   const layoutHeight = useLayoutHeight();
 
-  const [width, setWidth] = useState(0);
+  const [width, setWidth] = useState<'100%' | number>(0);
 
   useEffect(() => {
-    const calculateDimensions = () => setWidth((9 / 16) * layoutHeight);
+    const calculateDimensions = () => {
+      const needToScale = window.innerWidth / layoutHeight > 9 / 16;
+
+      setWidth(needToScale ? (9 / 16) * layoutHeight : '100%');
+    };
 
     calculateDimensions();
 
