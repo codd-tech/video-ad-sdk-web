@@ -3,7 +3,7 @@ import { Layout } from 'antd';
 
 import useLayoutHeight from '../model/use-layout-height';
 
-import styles from './styles.module.css';
+import styles from './styles.module.scss';
 
 const LayoutCommon: FC<PropsWithChildren> = ({ children }) => {
   const layoutHeight = useLayoutHeight();
