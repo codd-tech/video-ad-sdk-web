@@ -1,0 +1,14 @@
+.btn {
+	&[data-fixed="true"] {
+		width: 192px;
+	}
+
+	&[data-absolute="true"] {
+		position: absolute;
+
+		bottom: 32px;
+
+		left: 16px;
+		right: 16px;
+	}
+}

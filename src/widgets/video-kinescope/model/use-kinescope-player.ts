@@ -12,6 +12,9 @@ const useKinescopePlayer = (
 ) => {
   const [player, setPlayer] = useState<Kinescope.IframePlayer.Player | null>(null);
   const [playedSeconds, setPlayedSeconds] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const [isEnded, setIsEnded] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
 
   useEffect(() => {
     if (!factory || player) return;
@@ -41,11 +44,13 @@ const useKinescopePlayer = (
 
       setPlayer(player);
 
-      player.on(player.Events.TimeUpdate, ({ data }) => {
-        setPlayedSeconds(data.currentTime);
-      });
+      player.on(player.Events.TimeUpdate, ({ data }) => setPlayedSeconds(data.currentTime));
 
-      player.once(player.Events.Playing, () => {});
+      player.once(player.Events.DurationChange, ({ data }) => setDuration(data.duration));
+
+      player.once(player.Events.Ended, () => setIsEnded(true));
+
+      player.once(player.Events.VolumeChange, ({ data }) => setIsMuted(data.muted));
     })();
   }, [factory, player, src]);
 
@@ -63,11 +68,29 @@ const useKinescopePlayer = (
   const handleFocus = useCallback(() => player?.play(), [player]);
   const handleBlur = useCallback(() => player?.pause(), [player]);
 
+  const handleEnd = useCallback(
+    (callback?: () => void) => () => {
+      player?.seekTo(duration);
+      callback?.();
+    },
+    [duration, player],
+  );
+
+  const toggleMute = useCallback(() => {
+    if (!player) return;
+
+    player.isMuted().then((muted) => (muted ? player.unmute() : player.mute()));
+  }, [player]);
+
   useWindowFocus(handleFocus, handleBlur);
 
   return {
     playedSeconds,
     handleDestroy,
+    handleEnd,
+    isEnded,
+    toggleMute,
+    isMuted,
   };
 };
 

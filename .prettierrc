@@ -3,25 +3,5 @@
   "singleQuote": true,
   "tabWidth": 2,
   "endOfLine": "lf",
-  "trailingComma": "all",
-  "importOrderSeparation": true,
-  "importOrder": [
-    "<THIRD_PARTY_MODULES>",
-    "^@chakra-ui/(.*)$",
-    "^@[a-z]*/(.*)$",
-    "~/assets/(.*)$",
-    "~/shared/(.*)$",
-    "~/entities/(.*)$",
-    "~/features/(.*)$",
-    "~/widgets/(.*)$",
-    "~/pages/(.*)$",
-    "~/app",
-    "~/app/(.*)$",
-    "../../(.*)$",
-    "../(.*)$",
-    "^[./]"
-  ],
-  "plugins": [
-    "@trivago/prettier-plugin-sort-imports"
-  ]
+  "trailingComma": "all"
 }

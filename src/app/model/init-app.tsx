@@ -1,10 +1,9 @@
 import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
 
 import { useGlobal } from '~/shared/store/global.store';
 
 import App from '../ui/App';
-
-import { createRoot } from 'react-dom/client';
 
 /**
  * Init the SDK at the app's document.

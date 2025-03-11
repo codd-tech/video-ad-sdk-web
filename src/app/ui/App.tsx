@@ -4,12 +4,13 @@ import { AdTypes, OnAdSuccess } from '~/shared/api/ad';
 import { useMuteElements } from '~/shared/hooks';
 import { useLoadKinescope } from '~/shared/lib/kinescope';
 import { useGlobal } from '~/shared/store/global.store';
-
 import { Layout } from '~/widgets/layout';
 import { VIDEO_ID } from '~/widgets/video';
 import { VideoKinescope } from '~/widgets/video-kinescope';
 
 import { withProviders } from '../providers';
+
+import './global.scss';
 
 const App = withProviders(() => {
   const isVisible = useGlobal((state) => state.isVisible);
@@ -55,7 +56,7 @@ const App = withProviders(() => {
               onClick={onClick}
               {...ad}
               {...adUnit}
-              src="https://kinescope.io/5QMd936Jt7mfjat6v34MfD"
+              src="https://kinescope.io/px2oqarjT6fyF141WoJNCr"
             />
           )}
         </Layout>

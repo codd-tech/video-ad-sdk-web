@@ -1,28 +1,32 @@
-import { FC, PropsWithChildren } from 'react';
-
-import { Flex } from '@chakra-ui/react';
+import { FC, PropsWithChildren, useEffect, useState } from 'react';
+import { Layout } from 'antd';
 
 import useLayoutHeight from '../model/use-layout-height';
 
-const Layout: FC<PropsWithChildren> = ({ children }) => {
+import styles from './styles.module.css';
+
+const LayoutCommon: FC<PropsWithChildren> = ({ children }) => {
   const layoutHeight = useLayoutHeight();
 
+  const [width, setWidth] = useState(0);
+
+  useEffect(() => {
+    const calculateDimensions = () => setWidth((9 / 16) * layoutHeight);
+
+    calculateDimensions();
+
+    window.addEventListener('resize', calculateDimensions);
+
+    return () => window.removeEventListener('resize', calculateDimensions);
+  }, [layoutHeight]);
+
   return (
-    <Flex
-      h={layoutHeight}
-      direction="column"
-      justify="center"
-      align="center"
-      bg="gray.200"
-      pos="fixed"
-      top={0}
-      left={0}
-      right={0}
-      bottom={0}
-    >
-      {children}
-    </Flex>
+    <Layout className={styles.layout} style={{ height: layoutHeight }}>
+      <div className={styles.content} style={{ width }}>
+        {children}
+      </div>
+    </Layout>
   );
 };
 
-export default Layout;
+export default LayoutCommon;

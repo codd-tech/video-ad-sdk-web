@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-import { OnAdSuccess, AdModel, AdUnitModel, AdTypes, AdFormats } from '~/shared/api/ad';
+import { AdFormats, AdModel, AdTypes, AdUnitModel, OnAdSuccess } from '~/shared/api/ad';
 
 export interface ShowOptions {
   adUnitId: AdUnitModel['id'];
@@ -29,8 +29,16 @@ export interface GlobalStore {
 export const useGlobal = create<GlobalStore & Omit<ShowOptions, 'adUnitId'>>((setState) => ({
   token: null,
   isVisible: false,
-  ad: null,
-  adUnit: null,
+  ad: {
+    src: '',
+    link: '',
+  },
+  adUnit: {
+    type: AdTypes.StaticCreative,
+    format: AdFormats.Interstitial,
+    name: '123',
+    id: '123',
+  },
 
   init(token) {
     setState({ token });

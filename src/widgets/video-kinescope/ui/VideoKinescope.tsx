@@ -1,17 +1,21 @@
-import { FC, useCallback } from 'react';
+import { FC, useCallback, useMemo } from 'react';
+import { CloseOutlined, MutedFilled, SoundFilled } from '@ant-design/icons';
+import { Flex } from 'antd';
 
-import { Flex, IconButton } from '@chakra-ui/react';
-
+import { ADFinalOverlay } from '~/entities/ad';
+import { VideoAction } from '~/features/video/action';
+import { useCloseVideo } from '~/features/video/close';
+import { useSkipVideo } from '~/features/video/skip';
 import { AdModel, AdTypes, AdUnitModel } from '~/shared/api/ad';
 import { useVideoQuality } from '~/shared/hooks';
-import { telegram } from '~/shared/lib/telegram.ts';
+import { telegram } from '~/shared/lib/telegram';
 import { ShowOptions } from '~/shared/store/global.store';
-
-import { useCloseVideo, VideoClose } from '~/features/video/close';
-import { useSkipVideo, VideoSkip } from '~/features/video/skip';
+import { ButtonIcon, OverlayHeader } from '~/shared/ui';
 
 import { CLOSE_SECONDS_LIMIT, KINESCOPE_PLAYER_ID, SKIP_SECONDS_LIMIT } from '../lib/constants';
 import useKinescopePlayer from '../model/use-kinescope-player';
+
+import styles from './styles.module.scss';
 
 interface VideoKinescopeProps {
   factory: Kinescope.IframePlayer | null;
@@ -22,9 +26,12 @@ const VideoKinescope: FC<
 > = ({ factory, onEnded, onClick, src, link, type }) => {
   const quality = useVideoQuality(src);
 
-  const { playedSeconds, handleDestroy } = useKinescopePlayer(factory, src, quality);
+  const { playedSeconds, handleDestroy, handleEnd, isEnded, isMuted, toggleMute } =
+    useKinescopePlayer(factory, src, quality);
 
-  const { handleSkip, isCanSkip } = useSkipVideo(
+  const showActionButton = useMemo(() => playedSeconds >= 5, [playedSeconds]);
+
+  const { handleSkip, isCanSkip, handleSkipToEnd, isSkipped } = useSkipVideo(
     type === AdTypes.Skippable,
     SKIP_SECONDS_LIMIT,
     playedSeconds,
@@ -40,25 +47,35 @@ const VideoKinescope: FC<
   }, [link, onClick]);
 
   return (
-    <Flex
-      direction="column"
-      pos="relative"
-      overflow="hidden"
-      h="full"
-      w="full"
-      onClick={handleClick}
-    >
+    <Flex className={styles.wrapper} vertical onClick={handleClick}>
       <div id={KINESCOPE_PLAYER_ID} />
 
-      {isCanSkip && !isCanClose ? (
-        <IconButton top={1} right={1} size="xs" pos="absolute" onClick={handleDestroy(handleSkip)}>
-          <VideoSkip />
-        </IconButton>
-      ) : isCanClose ? (
-        <IconButton top={1} right={1} size="xs" pos="absolute" onClick={handleDestroy(handleClose)}>
-          <VideoClose />
-        </IconButton>
-      ) : null}
+      {showActionButton ? <VideoAction absolute /> : null}
+
+      {isEnded ? (
+        <ADFinalOverlay
+          HeaderAction={
+            <ButtonIcon
+              icon={<CloseOutlined />}
+              onClick={handleDestroy(isSkipped ? handleSkip : handleClose)}
+            />
+          }
+          Action={<VideoAction fixedWidth />}
+        />
+      ) : (
+        <OverlayHeader
+          left={
+            <ButtonIcon icon={isMuted ? <MutedFilled /> : <SoundFilled />} onClick={toggleMute} />
+          }
+          right={
+            isCanSkip && !isCanClose ? (
+              <ButtonIcon icon={<CloseOutlined />} onClick={handleEnd(handleSkipToEnd)} />
+            ) : isCanClose ? (
+              <ButtonIcon icon={<CloseOutlined />} onClick={handleEnd()} />
+            ) : null
+          }
+        />
+      )}
     </Flex>
   );
 };

@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-
 import * as iframeApiLoader from '@kinescope/player-iframe-api-loader';
 
 export const useLoadKinescope = () => {
