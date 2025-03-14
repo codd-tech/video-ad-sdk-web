@@ -1,16 +1,31 @@
 export interface AdModel {
-  src: string;
-  link: string;
+  actionId: string;
+  status: 'success';
+  data: {
+    contentType: 'miniAppVideo' | 'miniAppImage';
+    content: {
+      title: string;
+      button: {
+        url: string;
+        text: string;
+        isWebApp: boolean;
+      };
+      iconUrl: string;
+      subtitle: string;
+      videoUrl?: string;
+      imageUrl?: string;
+      notSkipSeconds: number;
+    };
+    ageLimit: number;
+    confirmKey: string;
+  };
 }
 
 export interface AdUnitModel {
-  name: string;
   id: string;
 
   type: AdTypes;
   format: AdFormats;
-
-  gamblingEnabled?: boolean;
 }
 
 export enum AdTypes {

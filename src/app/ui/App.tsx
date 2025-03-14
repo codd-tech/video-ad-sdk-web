@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo } from 'react';
 
-import { AdTypes, OnAdSuccess } from '~/shared/api/ad';
+import { AdTypes, OnAdSuccess, useAdSync } from '~/shared/api/ad';
 import { useMuteElements } from '~/shared/hooks';
 import { useLoadKinescope } from '~/shared/lib/kinescope';
 import { useGlobal } from '~/shared/store/global.store';
@@ -24,6 +24,8 @@ const App = withProviders(() => {
 
   const { handleMuteAll, handleUnmuteAll } = useMuteElements();
 
+  const { mutate } = useAdSync();
+
   const shouldShowVideoPlayer = useMemo(() => isVisible && !!ad, [isVisible, ad]);
 
   const isStatic = useMemo(() => adUnit?.type === AdTypes.StaticCreative, [adUnit?.type]);
@@ -45,6 +47,12 @@ const App = withProviders(() => {
 
   const factory = useLoadKinescope();
 
+  useEffect(() => {
+    if (isVisible) {
+      mutate();
+    }
+  }, [isVisible]);
+
   return (
     <>
       {isVisible && ad && adUnit ? (
@@ -56,7 +64,6 @@ const App = withProviders(() => {
               onClick={onClick}
               {...ad}
               {...adUnit}
-              src="https://kinescope.io/px2oqarjT6fyF141WoJNCr"
             />
           )}
         </Layout>

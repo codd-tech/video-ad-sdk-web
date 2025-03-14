@@ -1,6 +1,8 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
+import { QueryClientProvider } from '@tanstack/react-query';
 
+import { queryClient } from '~/shared/api';
 import { useGlobal } from '~/shared/store/global.store';
 
 import App from '../ui/App';
@@ -18,7 +20,9 @@ export const init = (token: string) => {
 
   createRoot(container).render(
     <StrictMode>
-      <App />
+      <QueryClientProvider client={queryClient}>
+        <App />
+      </QueryClientProvider>
     </StrictMode>,
   );
 };

@@ -29,14 +29,10 @@ export interface GlobalStore {
 export const useGlobal = create<GlobalStore & Omit<ShowOptions, 'adUnitId'>>((setState) => ({
   token: null,
   isVisible: false,
-  ad: {
-    src: '',
-    link: '',
-  },
+  ad: null,
   adUnit: {
     type: AdTypes.StaticCreative,
     format: AdFormats.Interstitial,
-    name: '123',
     id: '123',
   },
 
@@ -48,7 +44,6 @@ export const useGlobal = create<GlobalStore & Omit<ShowOptions, 'adUnitId'>>((se
       isVisible: true,
       adUnit: {
         id: payload.adUnitId,
-        name: '',
         type: AdTypes.Skippable,
         format: AdFormats.Interstitial,
       },
