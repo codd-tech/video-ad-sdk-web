@@ -1,9 +1,9 @@
 import { create } from 'zustand';
 
-import { AdFormats, AdModel, AdTypes, AdUnitModel, OnAdSuccess } from '~/shared/api/ad';
+import { AdModel, OnAdSuccess } from '~/shared/api/ad';
 
 export interface ShowOptions {
-  adUnitId: AdUnitModel['id'];
+  adUnitId: string;
 
   onEnded?: OnAdSuccess;
   onReward?: () => void;
@@ -13,7 +13,6 @@ export interface ShowOptions {
 export interface GlobalStore {
   token: string | null;
   ad: AdModel | null;
-  adUnit: AdUnitModel | null;
   isVisible: boolean;
 
   init(token: string): void;
@@ -24,17 +23,15 @@ export interface GlobalStore {
   show(options: ShowOptions): void;
 
   hide(): void;
+
+  setAd(ad: AdModel | null): void;
 }
 
-export const useGlobal = create<GlobalStore & Omit<ShowOptions, 'adUnitId'>>((setState) => ({
+export const useGlobal = create<GlobalStore & ShowOptions>((setState) => ({
   token: null,
   isVisible: false,
   ad: null,
-  adUnit: {
-    type: AdTypes.StaticCreative,
-    format: AdFormats.Interstitial,
-    id: '123',
-  },
+  adUnitId: '',
 
   init(token) {
     setState({ token });
@@ -42,11 +39,6 @@ export const useGlobal = create<GlobalStore & Omit<ShowOptions, 'adUnitId'>>((se
   show(payload) {
     setState({
       isVisible: true,
-      adUnit: {
-        id: payload.adUnitId,
-        type: AdTypes.Skippable,
-        format: AdFormats.Interstitial,
-      },
       ...payload,
     });
   },
@@ -54,10 +46,13 @@ export const useGlobal = create<GlobalStore & Omit<ShowOptions, 'adUnitId'>>((se
     setState({
       isVisible: false,
       ad: null,
-      adUnit: null,
+      adUnitId: '',
       onEnded: undefined,
       onReward: undefined,
       onClick: undefined,
     });
+  },
+  setAd(ad) {
+    setState({ ad });
   },
 }));

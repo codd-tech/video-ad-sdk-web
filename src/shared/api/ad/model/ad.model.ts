@@ -1,8 +1,13 @@
+export enum AdType {
+  Video = 'miniAppVideo',
+  Image = 'miniAppImage',
+}
+
 export interface AdModel {
   actionId: string;
   status: 'success';
   data: {
-    contentType: 'miniAppVideo' | 'miniAppImage';
+    contentType: AdType;
     content: {
       title: string;
       button: {
@@ -19,25 +24,6 @@ export interface AdModel {
     ageLimit: number;
     confirmKey: string;
   };
-}
-
-export interface AdUnitModel {
-  id: string;
-
-  type: AdTypes;
-  format: AdFormats;
-}
-
-export enum AdTypes {
-  NonSkippable = 'non-skippable',
-  Skippable = 'skippable',
-  StaticCreative = 'static',
-}
-
-export enum AdFormats {
-  Interstitial = 'interstitial',
-  Rewarded = 'rewarded',
-  Banner = 'banner',
 }
 
 export type AdPlayedStatus = 'skipped' | 'closed';

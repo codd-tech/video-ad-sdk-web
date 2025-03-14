@@ -12,7 +12,7 @@ const LayoutCommon: FC<PropsWithChildren> = ({ children }) => {
 
   useEffect(() => {
     const calculateDimensions = () => {
-      const needToScale = window.innerWidth / layoutHeight > 9 / 16;
+      const needToScale = window.innerWidth / layoutHeight > 1;
 
       setWidth(needToScale ? (9 / 16) * layoutHeight : '100%');
     };

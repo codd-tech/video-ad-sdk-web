@@ -1,5 +1,4 @@
 import { init, showAD } from '~/app';
-import { AdTypes } from '~/shared/api/ad';
 
 if (import.meta.env.DEV) {
   init('4f5a35a6f748d5642246e880e065d63454539b41');
@@ -9,4 +8,4 @@ if (import.meta.env.DEV) {
   });
 }
 
-export default { AdTypes, init, showAD };
+export default { init, showAD };

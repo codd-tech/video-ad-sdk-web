@@ -1,15 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import { AdQuality } from '~/shared/api/ad';
 import { useWindowFocus } from '~/shared/hooks';
 
 import { KINESCOPE_PLAYER_ID } from '../lib/constants';
 
-const useKinescopePlayer = (
-  factory: Kinescope.IframePlayer | null,
-  src: string,
-  quality: AdQuality,
-) => {
+const useKinescopePlayer = (factory: Kinescope.IframePlayer | null, src: string) => {
   const [player, setPlayer] = useState<Kinescope.IframePlayer.Player | null>(null);
   const [playedSeconds, setPlayedSeconds] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -32,7 +27,6 @@ const useKinescopePlayer = (
           localStorage: false,
           // @ts-expect-error Kinescope has not described options
           seekable: false,
-          endscreen: 'reset',
         },
         ui: {
           // @ts-expect-error Kinescope has not described options
@@ -44,6 +38,9 @@ const useKinescopePlayer = (
 
       setPlayer(player);
 
+      player.once(player.Events.Ready, () => console.log('ready'));
+      player.once(player.Events.Error, (e) => console.log('error', e));
+
       player.on(player.Events.TimeUpdate, ({ data }) => setPlayedSeconds(data.currentTime));
 
       player.once(player.Events.DurationChange, ({ data }) => setDuration(data.duration));
@@ -53,12 +50,6 @@ const useKinescopePlayer = (
       player.once(player.Events.VolumeChange, ({ data }) => setIsMuted(data.muted));
     })();
   }, [factory, player, src]);
-
-  useEffect(() => {
-    if (!player) return;
-
-    if (quality) player.setVideoQuality(quality as Kinescope.IframePlayer.VideoQuality);
-  }, [player, quality]);
 
   const handleDestroy = useCallback(
     (onDestroyed?: () => void) => () => player?.destroy()?.then(() => onDestroyed?.()),
@@ -89,6 +80,7 @@ const useKinescopePlayer = (
     handleDestroy,
     handleEnd,
     isEnded,
+    duration,
     toggleMute,
     isMuted,
   };

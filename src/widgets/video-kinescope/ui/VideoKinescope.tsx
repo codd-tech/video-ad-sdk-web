@@ -6,13 +6,12 @@ import { ADFinalOverlay } from '~/entities/ad';
 import { VideoAction } from '~/features/video/action';
 import { useCloseVideo } from '~/features/video/close';
 import { useSkipVideo } from '~/features/video/skip';
-import { AdModel, AdTypes, AdUnitModel } from '~/shared/api/ad';
-import { useVideoQuality } from '~/shared/hooks';
+import { AdModel } from '~/shared/api/ad';
 import { telegram } from '~/shared/lib/telegram';
 import { ShowOptions } from '~/shared/store/global.store';
 import { ButtonIcon, OverlayHeader } from '~/shared/ui';
 
-import { CLOSE_SECONDS_LIMIT, KINESCOPE_PLAYER_ID, SKIP_SECONDS_LIMIT } from '../lib/constants';
+import { KINESCOPE_PLAYER_ID } from '../lib/constants';
 import useKinescopePlayer from '../model/use-kinescope-player';
 
 import styles from './styles.module.scss';
@@ -22,48 +21,53 @@ interface VideoKinescopeProps {
 }
 
 const VideoKinescope: FC<
-  AdModel & AdUnitModel & Omit<ShowOptions, 'adUnitId' | 'token'> & VideoKinescopeProps
-> = ({ factory, onEnded, onClick, src, link, type }) => {
-  const quality = useVideoQuality(src);
+  AdModel['data'] & Omit<ShowOptions, 'adUnitId' | 'token'> & VideoKinescopeProps
+> = ({ factory, onEnded, onClick, content, ageLimit }) => {
+  const src = content.videoUrl!;
+  const notSkipSeconds = content.notSkipSeconds;
+  const button = content.button;
 
-  const { playedSeconds, handleDestroy, handleEnd, isEnded, isMuted, toggleMute } =
-    useKinescopePlayer(factory, src, quality);
+  const { playedSeconds, handleDestroy, handleEnd, isEnded, isMuted, toggleMute, duration } =
+    useKinescopePlayer(factory, src);
 
   const showActionButton = useMemo(() => playedSeconds >= 5, [playedSeconds]);
 
   const { handleSkip, isCanSkip, handleSkipToEnd, isSkipped } = useSkipVideo(
-    type === AdTypes.Skippable,
-    SKIP_SECONDS_LIMIT,
+    notSkipSeconds < duration,
+    notSkipSeconds,
     playedSeconds,
     onEnded,
   );
 
-  const { isCanClose, handleClose } = useCloseVideo(CLOSE_SECONDS_LIMIT, playedSeconds, onEnded);
+  const { isCanClose, handleClose } = useCloseVideo(notSkipSeconds, playedSeconds, onEnded);
 
   const handleClick = useCallback(() => {
     onClick?.();
 
-    telegram?.openLink(link, { try_instant_view: true });
-  }, [link, onClick]);
+    telegram?.openLink(button.url, { try_instant_view: true });
+  }, [button.url, onClick]);
 
   return (
     <Flex className={styles.wrapper} vertical onClick={handleClick}>
       <div id={KINESCOPE_PLAYER_ID} />
 
-      {showActionButton ? <VideoAction absolute /> : null}
+      {showActionButton ? <VideoAction text={button.text} onClick={handleClick} absolute /> : null}
 
       {isEnded ? (
         <ADFinalOverlay
+          ageLimit={ageLimit}
+          content={content}
           HeaderAction={
             <ButtonIcon
               icon={<CloseOutlined />}
               onClick={handleDestroy(isSkipped ? handleSkip : handleClose)}
             />
           }
-          Action={<VideoAction fixedWidth />}
+          Action={<VideoAction text={button.text} onClick={handleClick} fixedWidth />}
         />
       ) : (
         <OverlayHeader
+          ageLimit={ageLimit}
           left={
             <ButtonIcon icon={isMuted ? <MutedFilled /> : <SoundFilled />} onClick={toggleMute} />
           }

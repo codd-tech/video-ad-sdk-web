@@ -1,27 +1,27 @@
 import { useMutation } from '@tanstack/react-query';
+import { HTTPError } from 'ky';
 
 import { AdModel } from '~/shared/api/ad';
 import ky from '~/shared/lib/ky';
-import { telegram } from '~/shared/lib/telegram';
+import { getTGUserData } from '~/shared/lib/telegram';
 
-export const useAdSync = () => {
-  const { mutate, data, isPending } = useMutation<AdModel>({
+export const useAdSync = (onData: (data: AdModel) => void) => {
+  const { mutate, data, isPending } = useMutation<AdModel, HTTPError, string>({
     mutationKey: ['ad-sync'],
-    mutationFn: async () => {
-      const params = new URLSearchParams(telegram?.initData || '');
-
-      const userData = JSON.parse(params.get('user') || '{}');
+    mutationFn: async (adUnitId: string) => {
+      const userData = getTGUserData();
 
       const res = await ky.post('publish/sync', {
         json: {
-          supid: userData.id,
+          supid: userData.id + Math.random() * 100,
           userRawData: userData,
-          unitId: 83,
+          unitId: adUnitId,
         },
       });
 
       return await res.json();
     },
+    onSuccess: onData,
   });
 
   return {

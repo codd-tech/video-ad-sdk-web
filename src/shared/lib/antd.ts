@@ -7,6 +7,12 @@ export const theme: ThemeConfig = {
       controlHeight: 42,
       fontSize: 16,
     },
+    Progress: {
+      remainingColor: '#FFFFFF4C',
+      defaultColor: '#FFF',
+      colorSuccess: '#FFF',
+      lineBorderRadius: 1000,
+    },
   },
   token: {
     colorPrimary: '#0091FB',
