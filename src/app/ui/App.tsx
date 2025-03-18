@@ -1,61 +1,70 @@
 import { useCallback, useEffect, useMemo } from 'react';
 
-import { AdTypes, OnAdSuccess } from '~/shared/api/ad';
-import { useMuteElements } from '~/shared/hooks';
+import { AdType, OnAdSuccess, useAdConfirm, useAdSync } from '~/shared/api/ad';
 import { useLoadKinescope } from '~/shared/lib/kinescope';
 import { useGlobal } from '~/shared/store/global.store';
-
+import { Loader } from '~/shared/ui';
+import { ImageContent } from '~/widgets/image-content';
 import { Layout } from '~/widgets/layout';
-import { VIDEO_ID } from '~/widgets/video';
 import { VideoKinescope } from '~/widgets/video-kinescope';
 
 import { withProviders } from '../providers';
 
+import './global.scss';
+
 const App = withProviders(() => {
   const isVisible = useGlobal((state) => state.isVisible);
+  const adUnitId = useGlobal((state) => state.adUnitId);
+
   const ad = useGlobal((state) => state.ad);
-  const adUnit = useGlobal((state) => state.adUnit);
+  const setAd = useGlobal((state) => state.setAd);
 
   const hide = useGlobal((state) => state.hide);
 
   const onEnded = useGlobal((state) => state.onEnded);
   const onClick = useGlobal((state) => state.onClick);
 
-  const { handleMuteAll, handleUnmuteAll } = useMuteElements();
+  const { mutate, isPending } = useAdSync(setAd);
+  const { mutate: confirm } = useAdConfirm();
 
-  const shouldShowVideoPlayer = useMemo(() => isVisible && !!ad, [isVisible, ad]);
+  const isStatic = useMemo(() => ad?.data?.contentType === AdType.Image, [ad?.data?.contentType]);
 
-  const isStatic = useMemo(() => adUnit?.type === AdTypes.StaticCreative, [adUnit?.type]);
-
-  useEffect(() => {
-    if (shouldShowVideoPlayer) {
-      handleMuteAll(VIDEO_ID);
-    }
-  }, [handleMuteAll, handleUnmuteAll, shouldShowVideoPlayer]);
-
-  const handleVideoEnd = useCallback<OnAdSuccess>(
+  const handleADEnd = useCallback<OnAdSuccess>(
     (status) => {
+      const key = ad?.data?.confirmKey;
+
+      if (key) {
+        confirm(key);
+      }
+
       onEnded?.(status);
       hide();
-      handleUnmuteAll();
     },
-    [handleUnmuteAll, hide, onEnded],
+    [ad?.data?.confirmKey, confirm, hide, onEnded],
   );
 
   const factory = useLoadKinescope();
 
+  useEffect(() => {
+    if (isVisible && adUnitId) {
+      mutate(adUnitId);
+    }
+  }, [isVisible, adUnitId, mutate]);
+
   return (
     <>
-      {isVisible && ad && adUnit ? (
+      {isPending ? <Loader /> : null}
+
+      {isVisible && ad ? (
         <Layout>
-          {isStatic ? null : (
+          {isStatic ? (
+            <ImageContent onEnded={handleADEnd} onClick={onClick} {...ad.data} />
+          ) : (
             <VideoKinescope
               factory={factory}
-              onEnded={handleVideoEnd}
+              onEnded={handleADEnd}
               onClick={onClick}
-              {...ad}
-              {...adUnit}
-              src="https://kinescope.io/5QMd936Jt7mfjat6v34MfD"
+              {...ad.data}
             />
           )}
         </Layout>

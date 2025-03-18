@@ -9,10 +9,13 @@ const useSkipVideo = (
   onEnded?: OnAdSuccess,
 ) => {
   const [isCanSkip, setIsCanSkip] = useState(false);
+  const [isSkipped, setIsSkipped] = useState(false);
 
   useEffect(() => {
     if (canSkip && playedSeconds >= skipLimit) setIsCanSkip(true);
   }, [canSkip, playedSeconds, skipLimit]);
+
+  const handleSkipToEnd = useCallback(() => setIsSkipped(true), []);
 
   const handleSkip = useCallback(() => {
     onEnded?.('skipped');
@@ -21,6 +24,8 @@ const useSkipVideo = (
   return {
     isCanSkip,
     handleSkip,
+    handleSkipToEnd,
+    isSkipped,
   };
 };
 

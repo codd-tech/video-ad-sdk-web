@@ -1,17 +1,15 @@
-import { useCallback, useEffect, useState } from 'react';
+import { MouseEventHandler, useCallback, useEffect, useState } from 'react';
 
-import { AdQuality } from '~/shared/api/ad';
 import { useWindowFocus } from '~/shared/hooks';
 
 import { KINESCOPE_PLAYER_ID } from '../lib/constants';
 
-const useKinescopePlayer = (
-  factory: Kinescope.IframePlayer | null,
-  src: string,
-  quality: AdQuality,
-) => {
+const useKinescopePlayer = (factory: Kinescope.IframePlayer | null, src: string) => {
   const [player, setPlayer] = useState<Kinescope.IframePlayer.Player | null>(null);
   const [playedSeconds, setPlayedSeconds] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const [isEnded, setIsEnded] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
 
   useEffect(() => {
     if (!factory || player) return;
@@ -29,7 +27,6 @@ const useKinescopePlayer = (
           localStorage: false,
           // @ts-expect-error Kinescope has not described options
           seekable: false,
-          endscreen: 'reset',
         },
         ui: {
           // @ts-expect-error Kinescope has not described options
@@ -41,33 +38,55 @@ const useKinescopePlayer = (
 
       setPlayer(player);
 
-      player.on(player.Events.TimeUpdate, ({ data }) => {
-        setPlayedSeconds(data.currentTime);
-      });
+      player.once(player.Events.Ready, () => console.log('ready'));
+      player.once(player.Events.Error, (e) => console.log('error', e));
 
-      player.once(player.Events.Playing, () => {});
+      player.on(player.Events.TimeUpdate, ({ data }) => setPlayedSeconds(data.currentTime));
+
+      player.once(player.Events.DurationChange, ({ data }) => setDuration(data.duration));
+
+      player.once(player.Events.Ended, () => setIsEnded(true));
+
+      player.once(player.Events.VolumeChange, ({ data }) => setIsMuted(data.muted));
     })();
   }, [factory, player, src]);
 
-  useEffect(() => {
-    if (!player) return;
-
-    if (quality) player.setVideoQuality(quality as Kinescope.IframePlayer.VideoQuality);
-  }, [player, quality]);
-
   const handleDestroy = useCallback(
-    (onDestroyed?: () => void) => () => player?.destroy()?.then(() => onDestroyed?.()),
+    (onDestroyed?: () => void): MouseEventHandler =>
+      (e) => {
+        e.stopPropagation();
+        player?.destroy()?.then(() => onDestroyed?.());
+      },
     [player],
   );
 
   const handleFocus = useCallback(() => player?.play(), [player]);
   const handleBlur = useCallback(() => player?.pause(), [player]);
 
+  const handleEnd = useCallback(
+    (callback?: () => void) => () => {
+      player?.seekTo(duration);
+      callback?.();
+    },
+    [duration, player],
+  );
+
+  const toggleMute = useCallback(() => {
+    if (!player) return;
+
+    player.isMuted().then((muted) => (muted ? player.unmute() : player.mute()));
+  }, [player]);
+
   useWindowFocus(handleFocus, handleBlur);
 
   return {
     playedSeconds,
     handleDestroy,
+    handleEnd,
+    isEnded,
+    duration,
+    toggleMute,
+    isMuted,
   };
 };
 

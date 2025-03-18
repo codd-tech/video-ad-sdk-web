@@ -1,0 +1,20 @@
+.btn {
+	border-radius: 14px;
+	background-color: rgba(255, 255, 255, 0.20) !important;
+
+	&:not(&[data-noblur="true"]) {
+		backdrop-filter: blur(6px);
+	}
+
+	&:hover, &:active {
+		background-color: rgba(255, 255, 255, 0.25) !important;
+		color: white !important;
+	}
+
+	@media (hover: none) {
+		background-color: rgba(255, 255, 255, 0.20) !important;
+		color: inherit !important;
+	}
+
+	border: none !important;
+}

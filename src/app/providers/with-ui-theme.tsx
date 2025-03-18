@@ -1,11 +1,12 @@
 import { JSX } from 'react';
+import { App, ConfigProvider } from 'antd';
 
-import { ChakraProvider } from '@chakra-ui/react';
-
-import { theme } from '~/shared/lib/chakra-ui';
+import { theme } from '~/shared/lib/antd';
 
 export const withUiTheme = (component: () => JSX.Element) => () => (
-  <ChakraProvider value={theme}>{component()}</ChakraProvider>
+  <ConfigProvider theme={theme}>
+    <App>{component()}</App>
+  </ConfigProvider>
 );
 
 export default withUiTheme;

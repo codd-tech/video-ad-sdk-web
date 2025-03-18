@@ -36,9 +36,6 @@ AdSDK.showAD({
   onVideoEnded: (status) => {
     console.log(`Ad ended with status: ${status}`);
   },
-  onReward: () => {
-    console.log('User rewarded!');
-  }
 });
 ```
 
@@ -67,7 +64,6 @@ Options for displaying the video.
 - **adUnitId** (`string`): The ad unit id to be displayed.
 - **onEnded** (function, optional): A callback invoked when the video ends.
     - Accepts values: `'skipped'` | `'closed'`
-- **onReward** (function, optional): A callback invoked when the user is rewarded.
 - **onClick** (function, optional): A callback invoked when the user clicked on AD.
 
 ## Types
