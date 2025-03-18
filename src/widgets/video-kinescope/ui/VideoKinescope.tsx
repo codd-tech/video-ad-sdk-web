@@ -48,17 +48,21 @@ const VideoKinescope: FC<
   }, [button.url, onClick]);
 
   return (
-    <Flex className={styles.wrapper} vertical onClick={handleClick}>
+    <Flex className={styles.wrapper} vertical>
       <div id={KINESCOPE_PLAYER_ID} />
 
-      {showActionButton ? <VideoAction text={button.text} onClick={handleClick} absolute /> : null}
+      {!isEnded && showActionButton ? (
+        <VideoAction text={button.text} onClick={handleClick} absolute />
+      ) : null}
 
       {isEnded ? (
         <ADFinalOverlay
+          onClick={handleClick}
           ageLimit={ageLimit}
           content={content}
           HeaderAction={
             <ButtonIcon
+              hideBlur
               icon={<CloseOutlined />}
               onClick={handleDestroy(isSkipped ? handleSkip : handleClose)}
             />

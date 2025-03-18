@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo } from 'react';
 
-import { AdType, OnAdSuccess, useAdSync } from '~/shared/api/ad';
+import { AdType, OnAdSuccess, useAdConfirm, useAdSync } from '~/shared/api/ad';
 import { useLoadKinescope } from '~/shared/lib/kinescope';
 import { useGlobal } from '~/shared/store/global.store';
 import { Loader } from '~/shared/ui';
@@ -25,15 +25,22 @@ const App = withProviders(() => {
   const onClick = useGlobal((state) => state.onClick);
 
   const { mutate, isPending } = useAdSync(setAd);
+  const { mutate: confirm } = useAdConfirm();
 
   const isStatic = useMemo(() => ad?.data?.contentType === AdType.Image, [ad?.data?.contentType]);
 
   const handleADEnd = useCallback<OnAdSuccess>(
     (status) => {
+      const key = ad?.data?.confirmKey;
+
+      if (key) {
+        confirm(key);
+      }
+
       onEnded?.(status);
       hide();
     },
-    [hide, onEnded],
+    [ad?.data?.confirmKey, confirm, hide, onEnded],
   );
 
   const factory = useLoadKinescope();

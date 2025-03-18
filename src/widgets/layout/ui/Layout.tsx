@@ -29,6 +29,8 @@ const LayoutCommon: FC<PropsWithChildren> = ({ children }) => {
       <div className={styles.content} style={{ width }}>
         {children}
       </div>
+
+      <div className={styles.footer} />
     </Layout>
   );
 };

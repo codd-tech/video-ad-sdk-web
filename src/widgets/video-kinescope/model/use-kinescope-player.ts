@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { MouseEventHandler, useCallback, useEffect, useState } from 'react';
 
 import { useWindowFocus } from '~/shared/hooks';
 
@@ -52,7 +52,11 @@ const useKinescopePlayer = (factory: Kinescope.IframePlayer | null, src: string)
   }, [factory, player, src]);
 
   const handleDestroy = useCallback(
-    (onDestroyed?: () => void) => () => player?.destroy()?.then(() => onDestroyed?.()),
+    (onDestroyed?: () => void): MouseEventHandler =>
+      (e) => {
+        e.stopPropagation();
+        player?.destroy()?.then(() => onDestroyed?.());
+      },
     [player],
   );
 

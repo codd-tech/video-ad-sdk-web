@@ -11,14 +11,28 @@ const { Text, Title } = Typography;
 type ADFinalOverlayProps = {
   Action: ReactNode;
   HeaderAction: ReactNode;
+  onClick?: () => void;
 } & Pick<AdModel['data'], 'ageLimit'> &
   Pick<AdModel['data'], 'content'>;
 
-const ADFinalOverlay: FC<ADFinalOverlayProps> = ({ HeaderAction, Action, ageLimit, content }) => {
+const ADFinalOverlay: FC<ADFinalOverlayProps> = ({
+  HeaderAction,
+  Action,
+  ageLimit,
+  content,
+  onClick,
+}) => {
   const { title, subtitle, iconUrl } = content;
 
   return (
-    <Flex gap={28} vertical justify="center" align="center" className={styles.overlay}>
+    <Flex
+      onClick={onClick}
+      gap={28}
+      vertical
+      justify="center"
+      align="center"
+      className={styles.overlay}
+    >
       <OverlayHeader ageLimit={ageLimit} right={HeaderAction} />
 
       <div className={styles.logo}>

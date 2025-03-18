@@ -3,6 +3,8 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useWindowFocus } from '~/shared/hooks';
 import { ShowOptions } from '~/shared/store/global.store.ts';
 
+import { INTERVAL } from '../lib/constants';
+
 export const useImageContent = (notSkipSeconds: number, onEnded: ShowOptions['onEnded']) => {
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -22,16 +24,14 @@ export const useImageContent = (notSkipSeconds: number, onEnded: ShowOptions['on
   const startTimer = useCallback(() => {
     intervalRef.current = setInterval(() => {
       setPlayedSeconds((prev) => {
-        const isDone = prev === notSkipSeconds;
-
-        if (isDone) cancelTimer();
+        const isDone = prev >= notSkipSeconds * 1000;
 
         setIsEnded(isDone);
 
-        return isDone ? prev : prev + 1;
+        return isDone ? prev : prev + INTERVAL;
       });
-    }, 1000);
-  }, [cancelTimer, notSkipSeconds]);
+    }, INTERVAL);
+  }, [notSkipSeconds]);
 
   useWindowFocus(startTimer, cancelTimer);
 
@@ -39,11 +39,15 @@ export const useImageContent = (notSkipSeconds: number, onEnded: ShowOptions['on
     if (isLoaded) startTimer();
   }, [isLoaded]);
 
+  useEffect(() => {
+    if (isEnded) cancelTimer();
+  }, [cancelTimer, isEnded]);
+
   return {
     isEnded,
     isLoaded,
     handleLoad,
     handleClose,
-    playedSeconds,
+    playedSeconds: playedSeconds / 1000,
   };
 };

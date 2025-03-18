@@ -14,6 +14,7 @@
 .progress {
 	display: inline-block;
 	position: absolute;
+	z-index: 1;
 
 	width: auto;
 	left: 16px;
@@ -25,6 +26,10 @@
 
 	:global .ant-progress-text {
 		display: none;
+	}
+
+	:global .ant-progress-bg-outer {
+		transition: none !important;
 	}
 
 	:global .ant-progress-outer {
