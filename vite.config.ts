@@ -13,6 +13,7 @@ export default defineConfig({
       rollupTypes: true,
       tsconfigPath: './tsconfig.app.json',
     }),
+    // todo remove
     mkcert(),
   ],
   resolve: {
@@ -20,7 +21,7 @@ export default defineConfig({
       '~': path.resolve(__dirname, 'src'),
     },
   },
-// @ts-ignore
+  // @ts-ignore todo remove
   server: { https: true, host: '127.0.0.1' },
   define: {
     'process.env': process.env,
