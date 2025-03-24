@@ -55,7 +55,7 @@ const App = withProviders(() => {
     <>
       {isPending ? <Loader /> : null}
 
-      {isVisible && ad ? (
+      {isVisible && ad?.data ? (
         <Layout>
           {isStatic ? (
             <ImageContent onEnded={handleADEnd} onClick={onClick} {...ad.data} />
