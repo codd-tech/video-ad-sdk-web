@@ -1,5 +1,6 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
+import { StyleProvider } from '@ant-design/cssinjs';
 import { QueryClientProvider } from '@tanstack/react-query';
 
 import { queryClient } from '~/shared/api';
@@ -20,9 +21,11 @@ export const init = (token: string) => {
 
   createRoot(container).render(
     <StrictMode>
-      <QueryClientProvider client={queryClient}>
-        <App />
-      </QueryClientProvider>
+      <StyleProvider hashPriority="high">
+        <QueryClientProvider client={queryClient}>
+          <App />
+        </QueryClientProvider>
+      </StyleProvider>
     </StrictMode>,
   );
 };

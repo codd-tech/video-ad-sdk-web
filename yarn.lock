@@ -340,6 +340,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@codd-tech/video-ad-sdk@workspace:."
   dependencies:
+    "@ant-design/cssinjs": "npm:^1.23.0"
     "@ant-design/icons": "npm:^5.6.1"
     "@eslint/js": "npm:^9.13.0"
     "@kinescope/player-iframe-api-loader": "npm:^0.0.17"
