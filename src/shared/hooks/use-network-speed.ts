@@ -1,5 +1,5 @@
+import { useCallback, useEffect, useRef, useState } from 'react';
 import ky from 'ky';
-import { useState, useEffect, useCallback, useRef } from 'react';
 
 const useNetworkSpeed = (url: string) => {
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
