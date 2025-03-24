@@ -1,7 +1,6 @@
 import path from 'path';
 import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
-import mkcert from 'vite-plugin-mkcert';
 
 import react from '@vitejs/plugin-react';
 
@@ -13,16 +12,12 @@ export default defineConfig({
       rollupTypes: true,
       tsconfigPath: './tsconfig.app.json',
     }),
-    // todo remove
-    mkcert(),
   ],
   resolve: {
     alias: {
       '~': path.resolve(__dirname, 'src'),
     },
   },
-  // @ts-ignore todo remove
-  server: { https: true, host: '127.0.0.1' },
   define: {
     'process.env': process.env,
   },
