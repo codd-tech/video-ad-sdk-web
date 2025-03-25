@@ -13,7 +13,7 @@ export const useAdSync = (onData: (data: AdModel) => void) => {
 
       const res = await ky.post('publish/sync', {
         json: {
-          supid: userData.id + Math.random() * 100,
+          supid: userData.id,
           userRawData: userData,
           unitId: adUnitId,
         },

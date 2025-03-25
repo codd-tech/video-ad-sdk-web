@@ -7,7 +7,7 @@ import { VideoAction } from '~/features/video/action';
 import { useCloseVideo } from '~/features/video/close';
 import { useSkipVideo } from '~/features/video/skip';
 import { AdModel } from '~/shared/api/ad';
-import { telegram } from '~/shared/lib/telegram';
+import { getTelegram } from '~/shared/lib/telegram';
 import { ShowOptions } from '~/shared/store/global.store';
 import { ButtonIcon, OverlayHeader } from '~/shared/ui';
 
@@ -44,7 +44,7 @@ const VideoKinescope: FC<
   const handleClick = useCallback(() => {
     onClick?.();
 
-    telegram?.openLink(button.url, { try_instant_view: true });
+    getTelegram()?.openLink(button.url, { try_instant_view: true });
   }, [button.url, onClick]);
 
   return (

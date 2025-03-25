@@ -16,6 +16,7 @@ const useSkipVideo = (
   }, [canSkip, playedSeconds, skipLimit]);
 
   const handleSkipToEnd = useCallback(() => setIsSkipped(true), []);
+  const handleReset = useCallback(() => setIsSkipped(false), []);
 
   const handleSkip = useCallback(() => {
     onEnded?.('skipped');
@@ -26,6 +27,7 @@ const useSkipVideo = (
     handleSkip,
     handleSkipToEnd,
     isSkipped,
+    handleReset,
   };
 };
 

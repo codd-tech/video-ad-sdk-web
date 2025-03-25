@@ -51,14 +51,12 @@ const useKinescopePlayer = (factory: Kinescope.IframePlayer | null, src: string)
     })();
   }, [factory, player, src]);
 
-  const handleDestroy = useCallback(
+  const handleDestroy =
     (onDestroyed?: () => void): MouseEventHandler =>
-      (e) => {
-        e.stopPropagation();
-        player?.destroy()?.then(() => onDestroyed?.());
-      },
-    [player],
-  );
+    (e) => {
+      e.stopPropagation();
+      player?.destroy()?.then(() => onDestroyed?.());
+    };
 
   const handleFocus = useCallback(() => player?.play(), [player]);
   const handleBlur = useCallback(() => player?.pause(), [player]);

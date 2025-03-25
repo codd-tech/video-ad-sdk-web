@@ -1,18 +1,21 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import { telegram } from '~/shared/lib/telegram.ts';
+import { getTelegram } from '~/shared/lib/telegram';
 
 const useLayoutHeight = () => {
   const [layoutHeight, setLayoutHeight] = useState(
-    telegram?.viewportStableHeight || window.innerHeight,
+    getTelegram()?.viewportStableHeight || window.innerHeight,
   );
 
-  const onLayoutUpdate = useCallback(() => setLayoutHeight(telegram?.viewportStableHeight), []);
+  const onLayoutUpdate = useCallback(
+    () => setLayoutHeight(getTelegram()?.viewportStableHeight),
+    [],
+  );
 
   useEffect(() => {
-    telegram?.onEvent('viewportChanged', onLayoutUpdate);
+    getTelegram()?.onEvent('viewportChanged', onLayoutUpdate);
 
-    return () => telegram?.offEvent('viewportChanged', onLayoutUpdate);
+    return () => getTelegram()?.offEvent('viewportChanged', onLayoutUpdate);
   }, [onLayoutUpdate]);
 
   return layoutHeight;
