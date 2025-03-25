@@ -25,7 +25,7 @@
 	margin: 0;
 
 	:global .ant-progress-text {
-		display: none;
+		display: none !important;
 	}
 
 	:global .ant-progress-bg-outer {
