@@ -1,5 +1,4 @@
 import { FC, useCallback, useMemo } from 'react';
-import { CloseOutlined, MutedFilled, SoundFilled } from '@ant-design/icons';
 import { Flex } from 'antd';
 
 import { ADFinalOverlay } from '~/entities/ad';
@@ -7,6 +6,7 @@ import { VideoAction } from '~/features/video/action';
 import { useCloseVideo } from '~/features/video/close';
 import { useSkipVideo } from '~/features/video/skip';
 import { AdModel } from '~/shared/api/ad';
+import { IconSpeaker, IconSpeakerX, IconXMark } from '~/shared/assets';
 import { getTelegram } from '~/shared/lib/telegram';
 import { ShowOptions } from '~/shared/store/global.store';
 import { ButtonIcon, OverlayHeader } from '~/shared/ui';
@@ -63,7 +63,7 @@ const VideoKinescope: FC<
           HeaderAction={
             <ButtonIcon
               hideBlur
-              icon={<CloseOutlined />}
+              icon={<IconXMark />}
               onClick={handleDestroy(isSkipped ? handleSkip : handleClose)}
             />
           }
@@ -73,13 +73,13 @@ const VideoKinescope: FC<
         <OverlayHeader
           ageLimit={ageLimit}
           left={
-            <ButtonIcon icon={isMuted ? <MutedFilled /> : <SoundFilled />} onClick={toggleMute} />
+            <ButtonIcon icon={isMuted ? <IconSpeakerX /> : <IconSpeaker />} onClick={toggleMute} />
           }
           right={
             isCanSkip && !isCanClose ? (
-              <ButtonIcon icon={<CloseOutlined />} onClick={handleEnd(handleSkipToEnd)} />
+              <ButtonIcon icon={<IconXMark />} onClick={handleEnd(handleSkipToEnd)} />
             ) : isCanClose ? (
-              <ButtonIcon icon={<CloseOutlined />} onClick={handleEnd()} />
+              <ButtonIcon icon={<IconXMark />} onClick={handleEnd()} />
             ) : null
           }
         />

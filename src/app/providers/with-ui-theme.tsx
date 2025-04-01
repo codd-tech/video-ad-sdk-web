@@ -4,7 +4,7 @@ import { App, ConfigProvider } from 'antd';
 import { theme } from '~/shared/lib/antd';
 
 export const withUiTheme = (component: () => JSX.Element) => () => (
-  <ConfigProvider theme={theme}>
+  <ConfigProvider wave={{ disabled: true }} theme={theme}>
     <App>{component()}</App>
   </ConfigProvider>
 );

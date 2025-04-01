@@ -1,9 +1,9 @@
 import { FC, useCallback } from 'react';
-import { CloseOutlined } from '@ant-design/icons';
 import { Flex, Progress } from 'antd';
 
 import { VideoAction } from '~/features/video/action';
 import { AdModel } from '~/shared/api/ad';
+import { IconXMark } from '~/shared/assets';
 import { getTelegram } from '~/shared/lib/telegram';
 import { ShowOptions } from '~/shared/store/global.store';
 import { ButtonIcon, Loader, OverlayHeader } from '~/shared/ui';
@@ -43,7 +43,7 @@ const ImageContent: FC<AdModel['data'] & Omit<ShowOptions, 'adUnitId' | 'token'>
 
         <OverlayHeader
           ageLimit={ageLimit}
-          right={isEnded ? <ButtonIcon icon={<CloseOutlined />} onClick={handleClose} /> : null}
+          right={isEnded ? <ButtonIcon icon={<IconXMark />} onClick={handleClose} /> : null}
         />
 
         {isEnded ? null : (

@@ -18,14 +18,7 @@ const VideoAction: FC<VideoActionProps & Pick<AdModel['data']['content']['button
   text,
   onClick,
 }) => (
-  <Button
-    size="large"
-    className={styles.btn}
-    type="primary"
-    data-fixed={fixedWidth}
-    data-absolute={absolute}
-    onClick={onClick}
-  >
+  <Button className={styles.btn} data-fixed={fixedWidth} data-absolute={absolute} onClick={onClick}>
     {text}
   </Button>
 );

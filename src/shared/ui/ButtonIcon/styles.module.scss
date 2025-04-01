@@ -1,6 +1,11 @@
 .btn {
+	width: 42px !important;
+	height: 42px !important;
+	color: white !important;
 	border-radius: 14px !important;
 	background-color: rgba(255, 255, 255, 0.20) !important;
+	box-shadow: none !important;
+	padding: 0 !important;
 
 	&:not(&[data-noblur="true"]) {
 		backdrop-filter: blur(6px);
@@ -13,7 +18,7 @@
 
 	@media (hover: none) {
 		background-color: rgba(255, 255, 255, 0.20) !important;
-		color: inherit !important;
+		color: white !important;
 	}
 
 	border: none !important;

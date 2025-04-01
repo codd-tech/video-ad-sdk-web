@@ -1,6 +1,37 @@
 .btn {
+	padding: 0 24px !important;
+	transition: all .3s ease;
+	cursor: pointer;
+
+	border: none !important;
+	height: 52px !important;
+	box-shadow: none !important;
+	border-radius: 18px !important;
+	background-color: #0091FB !important;
+
+	&:hover {
+		background-color: #0083E0 !important;
+
+		span {
+			color: white !important;
+		}
+	}
+
+	span {
+		color: #FFF !important;
+		text-align: center;
+		font-size: 16px !important;
+		font-weight: 600 !important;
+		line-height: 140%;
+		letter-spacing: 0 !important;
+	}
+
 	position: relative;
 	z-index: 1;
+
+	@media (hover: none) {
+		background-color: #0091FB !important;
+	}
 
 	&[data-fixed="true"] {
 		width: 192px;

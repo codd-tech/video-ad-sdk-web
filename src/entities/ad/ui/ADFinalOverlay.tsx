@@ -40,7 +40,7 @@ const ADFinalOverlay: FC<ADFinalOverlayProps> = ({
       </div>
 
       <Flex gap={12} vertical align="center">
-        <Title>{title}</Title>
+        <Title className={styles.title}>{title}</Title>
 
         <Text className={styles.text}>{subtitle}</Text>
       </Flex>

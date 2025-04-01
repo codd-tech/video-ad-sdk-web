@@ -22,7 +22,7 @@ const OverlayHeader: FC<OverlayHeaderProps & Pick<AdModel['data'], 'ageLimit'>> 
   const lang = useMemo(() => {
     const userData = getTGUserData();
 
-    return userData.language_code || 'en';
+    return userData.language_code ?? 'en';
   }, []);
 
   return (
@@ -31,8 +31,14 @@ const OverlayHeader: FC<OverlayHeaderProps & Pick<AdModel['data'], 'ageLimit'>> 
 
       <Flex justify="center" vertical gap={2}>
         <Title level={2} className={styles.title}>
-          <span>{['ru', 'kz', 'by'].includes(lang) ? 'Реклама' : 'Ad'}</span> <Text>•</Text>{' '}
-          <span>{ageLimit}+</span>
+          <span>{['ru', 'kk', 'be'].includes(lang) ? 'Реклама' : 'Ad'}</span>
+
+          {ageLimit >= 18 ? (
+            <>
+              {' '}
+              <Text>•</Text> <span>{ageLimit}+</span>
+            </>
+          ) : null}
         </Title>
 
         <Text className={styles.text}>teleads.pro</Text>

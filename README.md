@@ -11,27 +11,27 @@ handling the completion of ads.
 To use this SDK, first install it in your project:
 
 ```bash
-npm install @codd-tech/video-ad-sdk
+npm install @teleads/tma-sdk
 ```
 
 or
 
 ```bash
-yarn add @codd-tech/video-ad-sdk
+yarn add @teleads/tma-sdk
 ```
 
 ## Quick Start
 
 Import the SDK into your file and initialize the app using the provided token.
 
-```javascript
-import AdSDK from '@codd-tech/video-ad-sdk';
+```typescript
+import TeleAdsTMA from '@teleads/tma-sdk';
 
-// Initialize the app with an API token
-AdSDK.init('YOUR_API_TOKEN');
+// Initialize the TeleAds SDK for TMA using the SDK token
+TeleAdsTMA.init('YOUR_SDK_TOKEN');
 
-// Show video
-AdSDK.showAD({
+// Show advertising
+TeleAdsTMA.showAD({
   adUnitId: 'AD_UNIT_ID',
   onVideoEnded: (status) => {
     console.log(`Ad ended with status: ${status}`);
