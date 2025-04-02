@@ -1,11 +1,12 @@
 import { create } from 'zustand';
 
-import { AdModel, OnAdSuccess } from '~/shared/api/ad';
+import { AdModel, AdPlayedStatus, OnAdSuccess } from '~/shared/api/ad';
 
 export interface ShowOptions {
   adUnitId: string;
 
   onEnded?: OnAdSuccess;
+  onError?: (error: Error) => void;
   onReward?: () => void;
   onClick?: () => void;
 }
@@ -20,7 +21,7 @@ export interface GlobalStore {
   /**
    * Shows AD player.
    */
-  show(options: ShowOptions): void;
+  show(options: ShowOptions): Promise<AdPlayedStatus>;
 
   hide(): void;
 
@@ -36,10 +37,20 @@ export const useGlobal = create<GlobalStore & ShowOptions>((setState) => ({
   init(token) {
     setState({ token });
   },
-  show(payload) {
-    setState({
-      isVisible: true,
-      ...payload,
+  async show({ onEnded, onError, ...payload }) {
+    return new Promise((resolve, reject) => {
+      setState({
+        isVisible: true,
+        onEnded: (status) => {
+          onEnded?.(status);
+          resolve(status);
+        },
+        onError: (error) => {
+          onError?.(error);
+          reject(error);
+        },
+        ...payload,
+      });
     });
   },
   hide() {

@@ -3,7 +3,7 @@ import { HTTPError } from 'ky';
 
 import ky from '~/shared/lib/ky';
 
-export const useAdConfirm = () => {
+export const useAdConfirm = (onError?: (error: Error) => void) => {
   return useMutation<unknown, HTTPError, string>({
     mutationKey: ['confirm'],
     mutationFn: async (confirmKey) => {
@@ -11,5 +11,6 @@ export const useAdConfirm = () => {
 
       return await res.json();
     },
+    onError,
   });
 };

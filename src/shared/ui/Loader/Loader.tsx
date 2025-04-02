@@ -1,10 +1,10 @@
-import { LoadingOutlined } from '@ant-design/icons';
+import { IconSpinner } from '~/shared/assets';
 
 import styles from './styles.module.scss';
 
 const Loader = () => (
   <div className={styles.loader}>
-    <LoadingOutlined />
+    <IconSpinner />
   </div>
 );
 

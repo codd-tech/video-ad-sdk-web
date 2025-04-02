@@ -22,10 +22,27 @@ const App = withProviders(() => {
   const hide = useGlobal((state) => state.hide);
 
   const onEnded = useGlobal((state) => state.onEnded);
+  const onError = useGlobal((state) => state.onError);
   const onClick = useGlobal((state) => state.onClick);
 
-  const { mutate, isPending } = useAdSync(setAd);
-  const { mutate: confirm } = useAdConfirm();
+  const handleError = useCallback(
+    (error: Error) => {
+      hide();
+      onError?.(error);
+    },
+    [hide, onError],
+  );
+
+  const { mutate, isPending } = useAdSync((data) => {
+    if (!data.data) {
+      handleError(new Error('Nothing to show'));
+
+      return;
+    }
+
+    setAd(data);
+  }, handleError);
+  const { mutate: confirm } = useAdConfirm(handleError);
 
   const isStatic = useMemo(() => ad?.data?.contentType === AdType.Image, [ad?.data?.contentType]);
 
@@ -43,7 +60,7 @@ const App = withProviders(() => {
     [ad?.data?.confirmKey, confirm, hide, onEnded],
   );
 
-  const factory = useLoadKinescope();
+  const factory = useLoadKinescope(handleError);
 
   useEffect(() => {
     if (isVisible && adUnitId) {

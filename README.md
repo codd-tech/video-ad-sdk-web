@@ -39,6 +39,26 @@ TeleAdsTMA.showAD({
 });
 ```
 
+### Also, you can use Promises
+
+First, ensure that you've set up the SDK as usual:
+
+```typescript
+import TeleAdsTMA from '@teleads/tma-sdk';
+
+// Initialize the TeleAds SDK for TMA using the SDK token
+TeleAdsTMA.init('YOUR_SDK_TOKEN');
+
+// Show advertising with Promise-like API
+TeleAdsTMA.showAD({
+  adUnitId: 'AD_UNIT_ID'
+}).then(status => {
+  console.log(`Ad ended with status: ${status}`);
+}).catch(error => {
+  console.error('Ad failed to show:', error);
+});
+```
+
 ## API Overview
 
 ### Methods

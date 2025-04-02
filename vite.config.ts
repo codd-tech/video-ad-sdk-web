@@ -25,7 +25,7 @@ export default defineConfig({
     emptyOutDir: true,
     lib: {
       entry: path.resolve(__dirname, 'src/index.tsx'),
-      name: 'VideoAD SDK',
+      name: 'TeleAdsTMA',
       fileName: (format) => `index.${format}.js`,
     },
     rollupOptions: {
