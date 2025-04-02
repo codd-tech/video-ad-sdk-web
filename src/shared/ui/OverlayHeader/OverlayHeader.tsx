@@ -5,7 +5,7 @@ const { Text, Title } = Typography;
 import { FC, ReactNode, useMemo } from 'react';
 
 import { AdModel } from '~/shared/api/ad';
-import { getTGUserData } from '~/shared/lib/telegram';
+import { getTelegram, getTGUserData } from '~/shared/lib/telegram';
 
 import styles from './styles.module.scss';
 
@@ -25,6 +25,8 @@ const OverlayHeader: FC<OverlayHeaderProps & Pick<AdModel['data'], 'ageLimit'>> 
     return userData.language_code ?? 'en';
   }, []);
 
+  const handleLinkClick = () => getTelegram()?.openLink('https://teleads.pro/?utm_source=sdk');
+
   return (
     <Flex className={styles.header} justify="space-between" align="center">
       <div style={{ width: 42 }}>{left}</div>
@@ -41,7 +43,9 @@ const OverlayHeader: FC<OverlayHeaderProps & Pick<AdModel['data'], 'ageLimit'>> 
           ) : null}
         </Title>
 
-        <Text className={styles.text}>teleads.pro</Text>
+        <Text onClick={handleLinkClick} className={styles.text}>
+          teleads.pro
+        </Text>
       </Flex>
 
       <div style={{ width: 42 }}>{right}</div>

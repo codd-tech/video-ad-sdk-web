@@ -1,12 +1,12 @@
 import { FC, useCallback } from 'react';
-import { Flex, Progress } from 'antd';
+import { Flex } from 'antd';
 
 import { VideoAction } from '~/features/video/action';
 import { AdModel } from '~/shared/api/ad';
 import { IconXMark } from '~/shared/assets';
 import { getTelegram } from '~/shared/lib/telegram';
 import { ShowOptions } from '~/shared/store/global.store';
-import { ButtonIcon, Loader, OverlayHeader } from '~/shared/ui';
+import { ButtonIcon, Loader, OverlayHeader, Timer } from '~/shared/ui';
 
 import { DEFAULT_SKIP_LIMIT } from '../lib/constants';
 import { useImageContent } from '../model/use-image-content';
@@ -46,14 +46,7 @@ const ImageContent: FC<AdModel['data'] & Omit<ShowOptions, 'adUnitId' | 'token'>
           right={isEnded ? <ButtonIcon icon={<IconXMark />} onClick={handleClose} /> : null}
         />
 
-        {isEnded ? null : (
-          <Progress
-            size="small"
-            className={styles.progress}
-            percent={(playedSeconds / notSkipSeconds) * 100}
-            type="line"
-          />
-        )}
+        {isEnded ? null : <Timer duration={notSkipSeconds} progress={playedSeconds} offset />}
       </Flex>
     </>
   );

@@ -9,7 +9,7 @@ import { AdModel } from '~/shared/api/ad';
 import { IconSpeaker, IconSpeakerX, IconXMark } from '~/shared/assets';
 import { getTelegram } from '~/shared/lib/telegram';
 import { ShowOptions } from '~/shared/store/global.store';
-import { ButtonIcon, OverlayHeader } from '~/shared/ui';
+import { ButtonIcon, OverlayHeader, Timer } from '~/shared/ui';
 
 import { KINESCOPE_PLAYER_ID } from '../lib/constants';
 import useKinescopePlayer from '../model/use-kinescope-player';
@@ -50,6 +50,10 @@ const VideoKinescope: FC<
   return (
     <Flex className={styles.wrapper} vertical>
       <div id={KINESCOPE_PLAYER_ID} />
+
+      {isEnded ? null : (
+        <Timer duration={duration} progress={playedSeconds} offset={showActionButton} />
+      )}
 
       {!isEnded && showActionButton ? (
         <VideoAction text={button.text} onClick={handleClick} absolute />
