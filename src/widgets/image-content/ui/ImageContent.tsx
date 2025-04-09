@@ -6,7 +6,7 @@ import { AdModel } from '~/shared/api/ad';
 import { IconXMark } from '~/shared/assets';
 import { getTelegram } from '~/shared/lib/telegram';
 import { ShowOptions } from '~/shared/store/global.store';
-import { ButtonIcon, Loader, OverlayHeader, Timer } from '~/shared/ui';
+import { ButtonIcon, Loader, OverlayHeader, SafeAreaView, Timer } from '~/shared/ui';
 
 import { DEFAULT_SKIP_LIMIT } from '../lib/constants';
 import { useImageContent } from '../model/use-image-content';
@@ -39,14 +39,16 @@ const ImageContent: FC<AdModel['data'] & Omit<ShowOptions, 'adUnitId' | 'token'>
       <Flex vertical align="center" className={styles.wrapper}>
         <img onLoad={handleLoad} src={imageUrl} alt="" />
 
-        <VideoAction text={button.text} onClick={handleClick} absolute />
+        <SafeAreaView>
+          <VideoAction text={button.text} onClick={handleClick} absolute />
 
-        <OverlayHeader
-          ageLimit={ageLimit}
-          right={isEnded ? <ButtonIcon icon={<IconXMark />} onClick={handleClose} /> : null}
-        />
+          <OverlayHeader
+            ageLimit={ageLimit}
+            right={isEnded ? <ButtonIcon icon={<IconXMark />} onClick={handleClose} /> : null}
+          />
 
-        {isEnded ? null : <Timer duration={notSkipSeconds} progress={playedSeconds} offset />}
+          {isEnded ? null : <Timer duration={notSkipSeconds} progress={playedSeconds} offset />}
+        </SafeAreaView>
       </Flex>
     </>
   );

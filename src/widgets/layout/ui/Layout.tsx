@@ -1,12 +1,14 @@
 import { FC, PropsWithChildren, useEffect, useState } from 'react';
 import { Layout } from 'antd';
 
-import useLayoutHeight from '../model/use-layout-height';
+import { useIsFullScreen, useLayoutHeight } from '~/shared/hooks';
 
 import styles from './styles.module.scss';
 
 const LayoutCommon: FC<PropsWithChildren> = ({ children }) => {
   const layoutHeight = useLayoutHeight();
+
+  const isFullScreen = useIsFullScreen();
 
   const [width, setWidth] = useState<'100%' | number>(0);
 
@@ -25,7 +27,7 @@ const LayoutCommon: FC<PropsWithChildren> = ({ children }) => {
   }, [layoutHeight]);
 
   return (
-    <Layout className={styles.layout} style={{ height: layoutHeight }}>
+    <Layout className={styles.layout} data-fullscreen={isFullScreen}>
       <div className={styles.content} style={{ width }}>
         {children}
       </div>

@@ -30,8 +30,9 @@ const useKinescopePlayer = (factory: Kinescope.IframePlayer | null, src: string)
         },
         ui: {
           // @ts-expect-error Kinescope has not described options
-          controlBar: 'always',
+          controlBar: false,
           buttonsBar: false,
+          controls: false,
         },
         keepElement: false,
       });

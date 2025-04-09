@@ -1,0 +1,17 @@
+.root {
+	position: absolute;
+
+	left: var(--tg-content-safe-area-inset-left, 0);
+	right: var(--tg-content-safe-area-inset-right, 0);
+	top: 0;
+	bottom: var(--tg-safe-area-inset-bottom, 0);
+
+	&[data-fullscreen="true"] {
+		border-radius: 16px 16px 0 0;
+		overflow: hidden;
+	}
+
+	&[data-bottom-disabled="true"] {
+		bottom: 0;
+	}
+}
