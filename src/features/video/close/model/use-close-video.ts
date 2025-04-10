@@ -10,7 +10,7 @@ const useCloseVideo = (closeLimit: number, playedSeconds: number, onEnded?: OnAd
   }, [onEnded]);
 
   useEffect(() => {
-    if (playedSeconds >= closeLimit) setIsCanClose(true);
+    setIsCanClose(playedSeconds >= closeLimit);
   }, [closeLimit, playedSeconds]);
 
   return {

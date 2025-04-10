@@ -1,10 +1,10 @@
 .root {
 	position: absolute;
 
-	left: var(--tg-content-safe-area-inset-left, 0);
-	right: var(--tg-content-safe-area-inset-right, 0);
+	left: var(--tg-content-safe-area-inset-left, 0px);
+	right: var(--tg-content-safe-area-inset-right, 0px);
 	top: 0;
-	bottom: var(--tg-safe-area-inset-bottom, 0);
+	bottom: var(--tg-safe-area-inset-bottom, 0px);
 
 	&[data-fullscreen="true"] {
 		border-radius: 16px 16px 0 0;

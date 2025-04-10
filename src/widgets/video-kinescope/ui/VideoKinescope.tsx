@@ -39,7 +39,11 @@ const VideoKinescope: FC<
     onEnded,
   );
 
-  const { isCanClose, handleClose } = useCloseVideo(notSkipSeconds, playedSeconds, onEnded);
+  const { isCanClose, handleClose } = useCloseVideo(
+    duration || notSkipSeconds,
+    playedSeconds,
+    onEnded,
+  );
 
   const handleClick = useCallback(() => {
     onClick?.();
