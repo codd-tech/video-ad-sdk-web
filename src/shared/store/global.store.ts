@@ -28,7 +28,7 @@ export interface GlobalStore {
   setAd(ad: AdModel | null): void;
 }
 
-export const useGlobal = create<GlobalStore & ShowOptions>((setState) => ({
+export const useGlobal = create<GlobalStore & ShowOptions>((setState, getState) => ({
   token: null,
   isVisible: false,
   ad: null,
@@ -38,6 +38,22 @@ export const useGlobal = create<GlobalStore & ShowOptions>((setState) => ({
     setState({ token });
   },
   async show({ onEnded, onError, ...payload }) {
+    if (!getState().token) {
+      const error = new Error('sdk_not_initialized');
+
+      onError?.(error);
+
+      return Promise.reject(error);
+    }
+
+    if (!Number.isInteger(payload.adUnitId)) {
+      const error = new Error('invalid_ad_unit');
+
+      onError?.(error);
+
+      return Promise.reject(error);
+    }
+
     return new Promise((resolve, reject) => {
       setState({
         isVisible: true,

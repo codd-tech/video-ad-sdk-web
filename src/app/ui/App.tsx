@@ -35,7 +35,7 @@ const App = withProviders(() => {
 
   const { mutate, isPending } = useAdSync((data) => {
     if (!data.data) {
-      handleError(new Error('Nothing to show'));
+      handleError(new Error('no_fill'));
 
       return;
     }

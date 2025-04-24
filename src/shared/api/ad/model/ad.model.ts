@@ -26,7 +26,7 @@ export interface AdModel {
   };
 }
 
-export type AdPlayedStatus = 'skipped' | 'closed';
+export type AdPlayedStatus = 'skipped' | 'completed';
 
 export type OnAdSuccess = (success: AdPlayedStatus) => void;
 

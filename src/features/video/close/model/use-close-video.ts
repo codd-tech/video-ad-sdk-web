@@ -6,7 +6,7 @@ const useCloseVideo = (closeLimit: number, playedSeconds: number, onEnded?: OnAd
   const [isCanClose, setIsCanClose] = useState(false);
 
   const handleClose = useCallback(() => {
-    onEnded?.('closed');
+    onEnded?.('completed');
   }, [onEnded]);
 
   useEffect(() => {

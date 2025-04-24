@@ -13,7 +13,7 @@ export const useImageContent = (notSkipSeconds: number, onEnded: ShowOptions['on
 
   const handleLoad = () => setIsLoaded(true);
 
-  const handleClose = () => onEnded?.('closed');
+  const handleClose = () => onEnded?.('completed');
 
   const [playedSeconds, setPlayedSeconds] = useState(0);
 
