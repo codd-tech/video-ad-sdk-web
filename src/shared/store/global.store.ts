@@ -46,7 +46,7 @@ export const useGlobal = create<GlobalStore & ShowOptions>((setState, getState) 
       return Promise.reject(error);
     }
 
-    if (!Number.isInteger(payload.adUnitId)) {
+    if (!Number.isInteger(+payload.adUnitId)) {
       const error = new Error('invalid_ad_unit');
 
       onError?.(error);
