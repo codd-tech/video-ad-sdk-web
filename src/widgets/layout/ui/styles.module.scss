@@ -10,6 +10,8 @@
 
   background-color: var(--black);
 
+  z-index: 9999;
+
   &[data-fullscreen="true"] {
     border-radius: 16px 16px 0 0;
     overflow: hidden;

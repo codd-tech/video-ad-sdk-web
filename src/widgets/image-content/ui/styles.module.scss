@@ -14,7 +14,7 @@
 .progress {
 	display: inline-block;
 	position: absolute;
-	z-index: 1;
+	z-index: 10000;
 
 	width: auto;
 	left: 16px;
