@@ -1,3 +1,3 @@
-import { init, showAd } from '~/app';
+import { abort, init, showAd } from '~/app';
 
-export default { init, showAd };
+export default { init, showAd, abort };
