@@ -8,4 +8,6 @@ export const abort = () => {
 
   onError?.(new Error('aborted'));
   hide();
+
+  return Promise.resolve();
 };
