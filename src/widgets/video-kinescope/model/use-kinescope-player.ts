@@ -1,10 +1,15 @@
 import { MouseEventHandler, useCallback, useEffect, useState } from 'react';
 
 import { useWindowFocus } from '~/shared/hooks';
+import { ShowOptions } from '~/shared/store/global.store.ts';
 
 import { KINESCOPE_PLAYER_ID } from '../lib/constants';
 
-const useKinescopePlayer = (factory: Kinescope.IframePlayer | null, src: string) => {
+const useKinescopePlayer = (
+  factory: Kinescope.IframePlayer | null,
+  src: string,
+  onAdLoaded: ShowOptions['onAdLoaded'],
+) => {
   const [player, setPlayer] = useState<Kinescope.IframePlayer.Player | null>(null);
   const [playedSeconds, setPlayedSeconds] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -39,7 +44,10 @@ const useKinescopePlayer = (factory: Kinescope.IframePlayer | null, src: string)
 
       setPlayer(player);
 
-      player.once(player.Events.Ready, () => console.log('ready'));
+      player.once(player.Events.Ready, () => {
+        onAdLoaded?.();
+        console.log('ready');
+      });
       player.once(player.Events.Error, (e) => console.log('error', e));
 
       player.on(player.Events.TimeUpdate, ({ data }) => setPlayedSeconds(data.currentTime));

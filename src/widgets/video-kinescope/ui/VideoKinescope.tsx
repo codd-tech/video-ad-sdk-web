@@ -22,13 +22,13 @@ interface VideoKinescopeProps {
 
 const VideoKinescope: FC<
   AdModel['data'] & Omit<ShowOptions, 'adUnitId' | 'token'> & VideoKinescopeProps
-> = ({ factory, onEnded, onClick, content, ageLimit }) => {
+> = ({ factory, onEnded, onClick, content, ageLimit, onAdLoaded }) => {
   const src = content.videoUrl!;
   const notSkipSeconds = content.notSkipSeconds;
   const button = content.button;
 
   const { playedSeconds, handleDestroy, handleEnd, isEnded, isMuted, toggleMute, duration } =
-    useKinescopePlayer(factory, src);
+    useKinescopePlayer(factory, src, onAdLoaded);
 
   const showActionButton = useMemo(() => playedSeconds >= 5, [playedSeconds]);
 

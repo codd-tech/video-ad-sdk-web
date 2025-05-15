@@ -24,6 +24,7 @@ const App = withProviders(() => {
   const onEnded = useGlobal((state) => state.onEnded);
   const onError = useGlobal((state) => state.onError);
   const onClick = useGlobal((state) => state.onClick);
+  const onAdLoaded = useGlobal((state) => state.onAdLoaded);
 
   const handleError = useCallback(
     (error: Error) => {
@@ -75,12 +76,18 @@ const App = withProviders(() => {
       {isVisible && ad?.data ? (
         <Layout>
           {isStatic ? (
-            <ImageContent onEnded={handleADEnd} onClick={onClick} {...ad.data} />
+            <ImageContent
+              onEnded={handleADEnd}
+              onClick={onClick}
+              onAdLoaded={onAdLoaded}
+              {...ad.data}
+            />
           ) : (
             <VideoKinescope
               factory={factory}
               onEnded={handleADEnd}
               onClick={onClick}
+              onAdLoaded={onAdLoaded}
               {...ad.data}
             />
           )}

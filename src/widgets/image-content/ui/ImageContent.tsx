@@ -18,6 +18,7 @@ const ImageContent: FC<AdModel['data'] & Omit<ShowOptions, 'adUnitId' | 'token'>
   ageLimit,
   onEnded,
   onClick,
+  onAdLoaded,
 }) => {
   const { notSkipSeconds = DEFAULT_SKIP_LIMIT, imageUrl, button } = content;
 
@@ -30,6 +31,7 @@ const ImageContent: FC<AdModel['data'] & Omit<ShowOptions, 'adUnitId' | 'token'>
   const { isLoaded, isEnded, handleLoad, playedSeconds, handleClose } = useImageContent(
     notSkipSeconds,
     onEnded,
+    onAdLoaded,
   );
 
   return (

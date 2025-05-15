@@ -9,6 +9,7 @@ export interface ShowOptions {
   onError?: (error: Error) => void;
   onReward?: () => void;
   onClick?: () => void;
+  onAdLoaded?: () => void;
 }
 
 export interface GlobalStore {
@@ -77,6 +78,7 @@ export const useGlobal = create<GlobalStore & ShowOptions>((setState, getState) 
       onEnded: undefined,
       onReward: undefined,
       onClick: undefined,
+      onAdLoaded: undefined,
     });
   },
   setAd(ad) {

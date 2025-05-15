@@ -5,13 +5,20 @@ import { ShowOptions } from '~/shared/store/global.store.ts';
 
 import { INTERVAL } from '../lib/constants';
 
-export const useImageContent = (notSkipSeconds: number, onEnded: ShowOptions['onEnded']) => {
+export const useImageContent = (
+  notSkipSeconds: number,
+  onEnded: ShowOptions['onEnded'],
+  onAdLoaded: ShowOptions['onAdLoaded'],
+) => {
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const [isLoaded, setIsLoaded] = useState(false);
   const [isEnded, setIsEnded] = useState(false);
 
-  const handleLoad = () => setIsLoaded(true);
+  const handleLoad = () => {
+    setIsLoaded(true);
+    onAdLoaded?.();
+  };
 
   const handleClose = () => onEnded?.('completed');
 
