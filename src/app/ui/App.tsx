@@ -10,8 +10,6 @@ import { VideoKinescope } from '~/widgets/video-kinescope';
 
 import { withProviders } from '../providers';
 
-import './global.scss';
-
 const App = withProviders(() => {
   const isVisible = useGlobal((state) => state.isVisible);
   const adUnitId = useGlobal((state) => state.adUnitId);
